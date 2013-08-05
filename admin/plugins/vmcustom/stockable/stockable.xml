@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<install version="1.5" type="plugin" group="vmcustom" >
+<extension version="2.5" type="plugin" group="vmcustom" >
     <name>VMCUSTOM_STOCKABLE</name>
     <creationDate>July 15 2013</creationDate>
     <author>The VirtueMart Development Team</author>
@@ -15,16 +15,21 @@
     <files>
         <filename plugin="stockable">stockable.php</filename>
     </files>
-    <params addpath="/administrator/components/com_virtuemart/elements">
-        <param type="vmjpluginwarning" />
-		<param type="spacer" default="VMCUSTOM_STOCKABLE_USAGE"   />
-        <param name="selectname1" type="text"  size="30"  default="" label="VMCUSTOM_STOCKABLE_SELECTNAME" description="VMCUSTOM_STOCKABLE_SELECTNAME_DESC" />
-        <param name="selectoptions1" type="textarea"  rows="10" cols="25" label="VMCUSTOM_STOCKABLE_SELECTOPTIONS" description="VMCUSTOM_STOCKABLE_SELECTOPTIONS_DESC" />
-        <param name="selectname2" type="text"  size="30"  default="" label="VMCUSTOM_STOCKABLE_SELECTNAME" description="VMCUSTOM_STOCKABLE_SELECTNAME_DESC" />
-        <param name="selectoptions2" type="textarea"  rows="10" cols="25" label="VMCUSTOM_STOCKABLE_SELECTOPTIONS" description="VMCUSTOM_STOCKABLE_SELECTOPTIONS_DESC" />
-        <param name="selectname3" type="text"  size="30"  default="" label="VMCUSTOM_STOCKABLE_SELECTNAME" description="VMCUSTOM_STOCKABLE_SELECTNAME_DESC" />
-        <param name="selectoptions3" type="textarea"  rows="10" cols="25" label="VMCUSTOM_STOCKABLE_SELECTOPTIONS" description="VMCUSTOM_STOCKABLE_SELECTOPTIONS_DESC" />
-        <param name="selectname4" type="text"  size="30"  default="" label="VMCUSTOM_STOCKABLE_SELECTNAME" description="VMCUSTOM_STOCKABLE_SELECTNAME_DESC" />
-        <param name="selectoptions4" type="textarea"  rows="10" cols="25" label="VMCUSTOM_STOCKABLE_SELECTOPTIONS" description="VMCUSTOM_STOCKABLE_SELECTOPTIONS_DESC" />
-    </params>
-</install>
+	<config>
+	<fields name="params">
+		<fieldset name="options" addfieldpath="/administrator/components/com_virtuemart/models/fields">
+
+        <field type="vmjpluginwarning" />
+		<field type="spacer" default="VMCUSTOM_STOCKABLE_USAGE"   />
+        <field name="selectname1" type="text"  size="30"  default="" label="VMCUSTOM_STOCKABLE_SELECTNAME" description="VMCUSTOM_STOCKABLE_SELECTNAME_DESC" />
+        <field name="selectoptions1" type="textarea"  rows="10" cols="25" label="VMCUSTOM_STOCKABLE_SELECTOPTIONS" description="VMCUSTOM_STOCKABLE_SELECTOPTIONS_DESC" />
+        <field name="selectname2" type="text"  size="30"  default="" label="VMCUSTOM_STOCKABLE_SELECTNAME" description="VMCUSTOM_STOCKABLE_SELECTNAME_DESC" />
+        <field name="selectoptions2" type="textarea"  rows="10" cols="25" label="VMCUSTOM_STOCKABLE_SELECTOPTIONS" description="VMCUSTOM_STOCKABLE_SELECTOPTIONS_DESC" />
+        <field name="selectname3" type="text"  size="30"  default="" label="VMCUSTOM_STOCKABLE_SELECTNAME" description="VMCUSTOM_STOCKABLE_SELECTNAME_DESC" />
+        <field name="selectoptions3" type="textarea"  rows="10" cols="25" label="VMCUSTOM_STOCKABLE_SELECTOPTIONS" description="VMCUSTOM_STOCKABLE_SELECTOPTIONS_DESC" />
+        <field name="selectname4" type="text"  size="30"  default="" label="VMCUSTOM_STOCKABLE_SELECTNAME" description="VMCUSTOM_STOCKABLE_SELECTNAME_DESC" />
+        <field name="selectoptions4" type="textarea"  rows="10" cols="25" label="VMCUSTOM_STOCKABLE_SELECTOPTIONS" description="VMCUSTOM_STOCKABLE_SELECTOPTIONS_DESC" />
+		</fieldset>
+	</fields>
+	</config>
+</extension>

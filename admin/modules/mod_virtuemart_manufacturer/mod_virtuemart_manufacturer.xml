@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/dtd/1.5/module-install.dtd">
-<install type="module" version="1.5.0">
+<extension type="module" version="2.5" method="upgrade"> 
     <name>mod_virtuemart_manufacturer</name>
     <creationDate>July 15 2013</creationDate>
     <author>The VirtueMart Development Team</author>
@@ -56,7 +56,9 @@
 			description="A suffix to be applied to the css class of the menu items" />
     </params>
 
-    <config>
+	<config>
+	<fields name="params">
+		<fieldset name="options" addfieldpath="/administrator/components/com_virtuemart/models/fields">
         <fields name = "params">
             <fieldset name="basic">
                 <field name="show" type="list" default="all"
@@ -100,4 +102,4 @@
             </fieldset>
         </fields>
     </config>
-</install>
+</extension>

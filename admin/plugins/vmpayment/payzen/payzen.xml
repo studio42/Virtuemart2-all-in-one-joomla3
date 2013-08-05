@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<install version="1.5" type="plugin" group="vmpayment" method="upgrade">
+<extension version="2.5" type="plugin" group="vmpayment" method="upgrade">
     <name>VM - Payment, PayZen</name>
     <creationDate>July 04 2012</creationDate>
     <author>Lyra Network</author>
@@ -29,7 +29,7 @@
     <params addpath="/plugins/vmpayment/payzen/elements" />
     <params addpath="/plugins/vmpayment/payzen/payzen/elements" />
 
-    <params addpath="/administrator/components/com_virtuemart/elements">
+	<config>
 	<param type="vmjpluginwarning" />
 	<param type="spacer" default="" level="level1" />
 	
@@ -140,4 +140,4 @@
 	    <option value="1">VMPAYMENT_PAYZEN_YES</option>
 	</param>
     </params>
-</install>
+</extension>

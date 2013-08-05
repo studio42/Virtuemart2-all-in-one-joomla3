@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<install version="1.5" type="plugin" group="vmpayment" >
+<extension version="2.5" type="plugin" group="vmpayment" >
     <name>Vm Payment plugin Moneybookers iDeal</name>
     <creationDate>April 2012</creationDate>
     <author>Skrill Holdings Limited</author>
@@ -58,4 +58,4 @@
 	<param name="status_canceled" type="vmorderstate" scope="com_virtuemart" default="X" label="VMPAYMENT_STATUS_FAILED" description="VMPAYMENT_STATUS_FAILED_DESC" />
 	<param type="spacer" default="" level="level1" />
     </params>
-</install>
+</extension>

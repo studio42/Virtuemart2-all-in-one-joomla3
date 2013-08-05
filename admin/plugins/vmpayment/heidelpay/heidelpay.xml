@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<extension type="plugin" version="2.5" group="vmpayment"
-           method="upgrade">
+<extension type="plugin" version="2.5" group="vmpayment" method="upgrade">
     <name>Heidelpay</name>
     <creationDate>12-Sep-2012</creationDate>
     <author>Heidelberger Payment GmbH</author>
@@ -25,7 +24,7 @@
     </files>
      <params addpath="/plugins/vmpayment/heidelpay/elements"/>
     <params addpath="/plugins/vmpayment/heidelpay/heidelpay/elements"/>
-    <params addpath="/administrator/components/com_virtuemart/elements">
+	<config>
 
                 <param type="spacer" default="VMPAYMENT_HEIDELPAY_PAYMENT"/>
           <param type="spacer" default=""/>

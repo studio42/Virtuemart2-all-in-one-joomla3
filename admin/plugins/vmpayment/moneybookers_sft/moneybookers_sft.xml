@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<install version="1.5" type="plugin" group="vmpayment" >
+<extension version="2.5" type="plugin" group="vmpayment" >
     <name>Vm Payment plugin Moneybookers Sofortueberweisung</name>
     <creationDate>April 2012</creationDate>
     <author>Skrill Holdings Limited</author>
@@ -18,7 +18,7 @@
 	<language tag="en-GB">en-GB.plg_vmpayment_moneybookers_sft.ini</language>
 	<language tag="en-US">en-GB.plg_vmpayment_moneybookers_sft.ini</language>
     </languages>
-    <params addpath="/administrator/components/com_virtuemart/elements">
+	<config>
 	<param type="vmjpluginwarning" />
 	<param type="spacer" default="VMPAYMENT_MONEYBOOKERS_PAYMENT_TITLE" level="level1" />
 	<param type="spacer" default="VMPAYMENT_MONEYBOOKERS_PAYMENT_WARNING" />
@@ -58,4 +58,4 @@
 	<param name="status_canceled" type="vmorderstate" scope="com_virtuemart" default="X" label="VMPAYMENT_STATUS_FAILED" description="VMPAYMENT_STATUS_FAILED_DESC" />
 	<param type="spacer" default="" level="level1" />
     </params>
-</install>
+</extension>

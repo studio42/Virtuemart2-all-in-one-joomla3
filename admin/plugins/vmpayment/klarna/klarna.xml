@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<install version="1.5" type="plugin" group="vmpayment" method="upgrade">
+<extension version="2.5" type="plugin" group="vmpayment" method="upgrade">
     <name>VM - Payment, Klarna</name>
     <creationDate>July 15 2013</creationDate>
     <author>The VirtueMart Development Team</author>
@@ -18,7 +18,7 @@
 
     <params addpath="/plugins/vmpayment/klarna/elements"/>
     <params addpath="/plugins/vmpayment/klarna/klarna/elements"/>
-    <params addpath="/administrator/components/com_virtuemart/elements">
+	<config>
         <param type="vmjpluginwarning"/>
         <param type="spacer" default="VMPAYMENT_KLARNA_CONF_PAYMENT_TITLE" level="level1"/>
         <param type="klarnalogo" level="level1"/>
@@ -154,4 +154,4 @@
     </params>
 
 
-</install>
+</extension>

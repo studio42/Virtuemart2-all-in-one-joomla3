@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<install version="1.5" type="plugin" group="vmcalculation" method="upgrade">
+<extension version="2.5" type="plugin" group="vmcalculation" method="upgrade">
     <name>VM - Calculation Avalara Tax</name>
     <creationDate>February 2013</creationDate>
     <author>Max Milbers</author>
@@ -16,4 +16,4 @@
         <filename plugin="avalara">AvaTax.php</filename>
         <folder>classes</folder>
     </files>
-</install>
+</extension>

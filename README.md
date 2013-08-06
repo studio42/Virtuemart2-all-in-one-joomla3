@@ -13,7 +13,8 @@ Installation steps :
 
 **PLEASE make a database Backup before instalation steps!!!** If you have already a running shop.
 
-Iinstall first the Zip files from here https://github.com/studio42/Virtuemart-2-Joomla-3-Bootstrap/archive/master.zip in joomla, this include the main virtuemart component, the all in one are ** extra files** only working with virtuemart 2
+Iinstall first the Zip files from here https://github.com/studio42/Virtuemart-2-Joomla-3-Bootstrap/archive/master.zip in joomla, this include the main virtuemart component.  
+The all in one are **extra files** only working with virtuemart 2
 
 Then download this pack from here https://github.com/studio42/Virtuemart2-all-in-one-joomla3/archive/master.zip and install it in joomla.
 

@@ -7,12 +7,12 @@
 
 defined('_JEXEC') or die();
 
-jimport('joomla.application.component.view');
+jimport('joomla.application.component.viewLegacy');
 
 /**
  * The Live Update MVC view
  */
-class LiveUpdateView extends JView
+class LiveUpdateView extends JViewLegacy
 {
 	public function display($tpl = null)
 	{

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/module-install.dtd">
-<install method="upgrade" type="component" version="1.5.0">
+<extension method="upgrade" type="component" version="2.5" method="upgrade">
     <name>VirtueMart_allinone</name>
      <creationDate>July 14 2013</creationDate>
     <copyright>Copyright (C) 2004-2012 Virtuemart Team. All rights reserved.</copyright>
@@ -32,4 +32,4 @@
         </files>
     </administration>
 	
-</install>
+</extension>

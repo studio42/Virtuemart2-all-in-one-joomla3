@@ -60,27 +60,27 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 			$this->updateShipperToShipment ();
 			$this->installPlugin ('Standard', 'plugin', 'standard', 'vmpayment');
 			$this->installPlugin ('Paypal', 'plugin', 'paypal', 'vmpayment');
-			$this->installPlugin ('PayZen', 'plugin', 'payzen', 'vmpayment');
-			$this->installPlugin ('SystemPay', 'plugin', 'systempay', 'vmpayment');
-			$this->installPlugin ('Moneybookers', 'plugin', 'moneybookers', 'vmpayment', 0, 0);
-			$this->installPlugin ('Moneybookers Credit Cards', 'plugin', 'moneybookers_acc', 'vmpayment');
-			$this->installPlugin ('Moneybookers Lastschrift', 'plugin', 'moneybookers_did', 'vmpayment');
-			$this->installPlugin ('Moneybookers iDeal', 'plugin', 'moneybookers_idl', 'vmpayment');
-			$this->installPlugin ('Moneybookers Giropay', 'plugin', 'moneybookers_gir', 'vmpayment');
-			$this->installPlugin ('Moneybookers Sofortueberweisung', 'plugin', 'moneybookers_sft', 'vmpayment');
-			$this->installPlugin ('Moneybookers Przelewy24', 'plugin', 'moneybookers_pwy', 'vmpayment');
-			$this->installPlugin ('Moneybookers Online Bank Transfer', 'plugin', 'moneybookers_obt', 'vmpayment');
-			$this->installPlugin ('Moneybookers Skrill Digital Wallet', 'plugin', 'moneybookers_wlt', 'vmpayment');
-			$this->installPlugin ('Authorize.net', 'plugin', 'authorizenet', 'vmpayment');
-			$this->installPlugin ('Klarna', 'plugin', 'klarna', 'vmpayment');
-			$this->installPlugin ('Heidelpay', 'plugin', 'heidelpay', 'vmpayment');
+			// $this->installPlugin ('PayZen', 'plugin', 'payzen', 'vmpayment');
+			// $this->installPlugin ('SystemPay', 'plugin', 'systempay', 'vmpayment');
+			// $this->installPlugin ('Moneybookers', 'plugin', 'moneybookers', 'vmpayment', 0, 0);
+			// $this->installPlugin ('Moneybookers Credit Cards', 'plugin', 'moneybookers_acc', 'vmpayment');
+			// $this->installPlugin ('Moneybookers Lastschrift', 'plugin', 'moneybookers_did', 'vmpayment');
+			// $this->installPlugin ('Moneybookers iDeal', 'plugin', 'moneybookers_idl', 'vmpayment');
+			// $this->installPlugin ('Moneybookers Giropay', 'plugin', 'moneybookers_gir', 'vmpayment');
+			// $this->installPlugin ('Moneybookers Sofortueberweisung', 'plugin', 'moneybookers_sft', 'vmpayment');
+			// $this->installPlugin ('Moneybookers Przelewy24', 'plugin', 'moneybookers_pwy', 'vmpayment');
+			// $this->installPlugin ('Moneybookers Online Bank Transfer', 'plugin', 'moneybookers_obt', 'vmpayment');
+			// $this->installPlugin ('Moneybookers Skrill Digital Wallet', 'plugin', 'moneybookers_wlt', 'vmpayment');
+			// $this->installPlugin ('Authorize.net', 'plugin', 'authorizenet', 'vmpayment');
+			// $this->installPlugin ('Klarna', 'plugin', 'klarna', 'vmpayment');
+			// $this->installPlugin ('Heidelpay', 'plugin', 'heidelpay', 'vmpayment');
 
 			$this->installPlugin ('By weight, ZIP and countries', 'plugin', 'weight_countries', 'vmshipment');
 
 			$this->installPlugin ('Customer text input', 'plugin', 'textinput', 'vmcustom');
 			$this->installPlugin ('Product specification', 'plugin', 'specification', 'vmcustom');
 			$this->installPlugin ('Stockable variants', 'plugin', 'stockable', 'vmcustom');
-			$this->installPlugin ('Avalara Tax', 'plugin', 'avalara', 'vmcalculation', 0);
+			// $this->installPlugin ('Avalara Tax', 'plugin', 'avalara', 'vmcalculation', 0);
 
 			// 			$table = '#__virtuemart_customs';
 			// 			$fieldname = 'field_type';
@@ -196,7 +196,7 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 			} else {
 				echo "<H3>Updated Virtuemart Plugin tables</h3>";
 			}
-			$this->updateOrderingExtensions();
+			// $this->updateOrderingExtensions();
 
 			return TRUE;
 
@@ -315,25 +315,13 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 				// Joomla! 1.7 code here
 				$dst = JPATH_ROOT . DS . 'plugins' . DS . $group . DS . $element;
 
-			} elseif (version_compare (JVERSION, '1.6.0', 'ge')) {
-				// Joomla! 1.6 code here
-				$dst = JPATH_ROOT . DS . 'plugins' . DS . $group . DS . $element;
-			} else {
-				// Joomla! 1.5 code here
-				$dst = JPATH_ROOT . DS . 'plugins' . DS . $group;
 			}
 
 			if ($task != 'updateDatabase') {
 				$this->recurse_copy ($src, $dst);
 			}
 
-			if ($group != 'search') {
 				$this->updatePluginTable ($name, $type, $element, $group, $dst);
-			} else {
-				if (version_compare (JVERSION, '1.6.0', 'ge')) {
-					$this->updatePluginTable ($name, $type, $element, $group, $dst);
-				}
-			}
 
 		}
 
@@ -417,20 +405,9 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 				return;
 			}
 			$table->load ();
-			if (version_compare (JVERSION, '1.7.0', 'ge')) {
-				// Joomla! 1.7 code here
-				$position = 'position-4';
-				$access = 1;
-			} else {
-				if (version_compare (JVERSION, '1.6.0', 'ge')) {
-					// Joomla! 1.6 code here
-					$access = 1;
-				} else {
-					// Joomla! 1.5 code here
-					$position = 'left';
-					$access = 0;
-				}
-			}
+			// Joomla! 1.7 code here
+			$position = 'position-4';
+			$access = 1;
 
 			if (empty($table->title)) {
 				$table->title = $title;
@@ -506,41 +483,39 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 			$db->setQuery ($q);
 			$db->query ();
 
-			if (version_compare (JVERSION, '1.6.0', 'ge')) {
+			$q = 'SELECT extension_id FROM `#__extensions` WHERE `element` = "' . $module . '" ';
+			$db->setQuery ($q);
+			$ext_id = $db->loadResult ();
 
-				$q = 'SELECT extension_id FROM `#__extensions` WHERE `element` = "' . $module . '" ';
-				$db->setQuery ($q);
-				$ext_id = $db->loadResult ();
-
-				//				$manifestCache = str_replace('"', '\'', $data["manifest_cache"]);
-				$action = '';
-				if (empty($ext_id)) {
-					if (version_compare (JVERSION, '1.6.0', 'ge')) {
-						$manifest_cache = json_encode (JApplicationHelper::parseXMLInstallFile ($src . DS . $module . '.xml'));
-					}
-					$q = 'INSERT INTO `#__extensions` 	(`name`, `type`, `element`, `folder`, `client_id`, `enabled`, `access`, `protected`, `manifest_cache`, `params`, `ordering`) VALUES
-																	( "' . $module . '" , "module", "' . $module . '", "", "0", "1","' . $access . '", "0", "' . $db->escape ($manifest_cache) . '", "' . $params . '","' . $ordering . '");';
-				} else {
-
-					/*					$q = 'UPDATE `#__extensions` SET 	`name`= "'.$module.'",
-																						`type`= "module",
-																						`element`= "'.$module.'",
-																						`folder`= "",
-																						`client_id`= "'.$client_id.'",
-																						`enabled`= "1",
-																						`access`= "'.$access.'",
-																						`protected`= "0",
-																						`ordering`= "'.$ordering.'"
-
-										WHERE `extension_id`= "'.$ext_id.'" ';*/
+			//				$manifestCache = str_replace('"', '\'', $data["manifest_cache"]);
+			$action = '';
+			if (empty($ext_id)) {
+				if (version_compare (JVERSION, '1.6.0', 'ge')) {
+					$manifest_cache = json_encode (JApplicationHelper::parseXMLInstallFile ($src . DS . $module . '.xml'));
 				}
-				$db->setQuery ($q);
-				if (!$db->query ()) {
-					$app = JFactory::getApplication ();
-					$app->enqueueMessage (get_class ($this) . '::  ' . $db->getErrorMsg ());
-				}
+				$q = 'INSERT INTO `#__extensions` 	(`name`, `type`, `element`, `folder`, `client_id`, `enabled`, `access`, `protected`, `manifest_cache`, `params`, `ordering`) VALUES
+																( "' . $module . '" , "module", "' . $module . '", "", "0", "1","' . $access . '", "0", "' . $db->escape ($manifest_cache) . '", "' . $params . '","' . $ordering . '");';
+			} else {
 
+				/*					$q = 'UPDATE `#__extensions` SET 	`name`= "'.$module.'",
+																					`type`= "module",
+																					`element`= "'.$module.'",
+																					`folder`= "",
+																					`client_id`= "'.$client_id.'",
+																					`enabled`= "1",
+																					`access`= "'.$access.'",
+																					`protected`= "0",
+																					`ordering`= "'.$ordering.'"
+
+									WHERE `extension_id`= "'.$ext_id.'" ';*/
 			}
+			$db->setQuery ($q);
+			if (!$db->query ()) {
+				$app = JFactory::getApplication ();
+				$app->enqueueMessage (get_class ($this) . '::  ' . $db->getErrorMsg ());
+			}
+
+
 		}
 
 		public function VmModulesAlreadyInstalled () {
@@ -615,18 +590,10 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 			if (empty($this->db)) {
 				$this->db = JFactory::getDBO ();
 			}
-			if (version_compare (JVERSION, '1.6.0', 'ge')) {
-				// Joomla! 1.6 code here
-				$table = JTable::getInstance ('extension');
-				$tableName = '#__extensions';
-				$idfield = 'extension_id';
-			} else {
-
-				// Joomla! 1.5 code here
-				$table = JTable::getInstance ('plugin');
-				$tableName = '#__plugins';
-				$idfield = 'id';
-			}
+			// Joomla! 1.6 code here
+			$table = JTable::getInstance ('extension');
+			$tableName = '#__extensions';
+			$idfield = 'extension_id';
 
 			$q = 'SELECT ' . $idfield . ' FROM ' . $tableName . ' WHERE `folder` = "vmshipper" ';
 			$this->db->setQuery ($q);
@@ -710,10 +677,8 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 	// PLZ look in #vminstall.php# to add your plugin and module
 	function com_install () {
 
-		if (!version_compare (JVERSION, '1.6.0', 'ge')) {
-			$vmInstall = new com_virtuemart_allinoneInstallerScript();
-			$vmInstall->vmInstall ();
-		}
+		$vmInstall = new com_virtuemart_allinoneInstallerScript();
+		$vmInstall->vmInstall ();
 		return TRUE;
 	}
 

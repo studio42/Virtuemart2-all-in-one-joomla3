@@ -29,8 +29,8 @@ require_once dirname(__FILE__).'/config.php';
 $task = JRequest::getCmd('task');
 if($task=='updateDatabase'){
 	$data = JRequest::get('get');
-	JRequest::setVar($data['token'], '1', 'post');
-	JRequest::checkToken() or jexit('Invalid Token, in ' . JRequest::getWord('task'));
+
+	JSession::checkToken() or JSession::checkToken('get') or jexit('Invalid Token, in ' . JRequest::getWord('task'));
 
 	//Update Tables
 	if (!class_exists( 'VmConfig' )) require(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_virtuemart'.DS.'helpers'.DS.'config.php');
@@ -76,7 +76,7 @@ $jlang = JFactory::getLanguage();
 		$jlang->load('com_virtuemart', JPATH_ADMINISTRATOR, null, true); // Load the currently selected language
 
 		?>
-<?php $link=JROUTE::_('index.php?option=com_virtuemart_allinone&task=updateDatabase&token='.JUtility::getToken() ); ?>
+<?php $link=JROUTE::_('index.php?option=com_virtuemart_allinone&task=updateDatabase&token='.JSession::getFormToken() ); ?>
 	    <button onclick="javascript:confirmation('<?php echo addslashes( JText::_('COM_VIRTUEMART_UPDATE_VMPLUGINTABLES') ); ?>', '<?php echo $link; ?>');">
 
             <?php echo JText::_('COM_VIRTUEMART_UPDATE_VMPLUGINTABLES'); ?>

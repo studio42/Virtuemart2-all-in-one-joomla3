@@ -7,7 +7,6 @@
 
 defined('_JEXEC') or die();
 
-jimport('joomla.application.component.viewLegacy');
 
 /**
  * The Live Update MVC view

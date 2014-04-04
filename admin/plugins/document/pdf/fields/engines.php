@@ -52,7 +52,7 @@ class JFormFieldEngines extends JFormFieldList
 		{
 			foreach ($renderers as $renderer) {
 				$lib = substr($renderer, 0, -4) ;
-				if (file_exists(JPATH_LIBRARIES.DS.$lib) ) {
+				if (file_exists(JPATH_LIBRARIES.'/'.$lib) ) {
 					$options[] = JHtml::_('select.option', $lib, $lib);
 				}
 			}

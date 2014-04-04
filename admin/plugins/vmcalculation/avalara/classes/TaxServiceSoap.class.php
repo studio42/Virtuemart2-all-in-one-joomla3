@@ -23,7 +23,7 @@ die('Direct Access to ' . basename(__FILE__) . ' is not allowed.');
  * @copyright � 2004 - 2011 Avalara, Inc.  All rights reserved.
  * @package   Tax
  */
-if(!class_exists('AvalaraSoapClient')) require (VMAVALARA_CLASS_PATH.DS.'AvalaraSoapClient.class.php');
+if(!class_exists('AvalaraSoapClient')) require (VMAVALARA_CLASS_PATH.'/AvalaraSoapClient.class.php');
 
 class TaxServiceSoap extends AvalaraSoapClient
 {
@@ -63,7 +63,7 @@ public function __construct($configurationName = 'Default')
     {
         $config = new ATConfig($configurationName);
 
-	    if(!class_exists('DynamicSoapClient')) require (VMAVALARA_CLASS_PATH.DS.'DynamicSoapClient.class.php');
+	    if(!class_exists('DynamicSoapClient')) require (VMAVALARA_CLASS_PATH.'/DynamicSoapClient.class.php');
         $this->client = new DynamicSoapClient   (
             $config->taxWSDL,
             array

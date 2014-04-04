@@ -17,7 +17,7 @@ defined('_JEXEC') or die( 'Direct Access to '.basename(__FILE__).' is not allowe
 */
 
 
-if (!class_exists( 'VmConfig' )) require(JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_virtuemart'.DS.'helpers'.DS.'config.php');
+if (!class_exists( 'VmConfig' )) require(JPATH_ADMINISTRATOR .'/components/com_virtuemart/helpers/config.php');
 
 VmConfig::loadConfig();
 VmConfig::loadJLang('mod_virtuemart_product', true);

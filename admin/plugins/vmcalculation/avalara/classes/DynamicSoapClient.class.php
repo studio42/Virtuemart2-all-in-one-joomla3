@@ -32,13 +32,13 @@ class DynamicSoapClient extends SoapClient
 
 	public function __call($n,$args)
 	{
-		if(!class_exists('CancelTaxResult')) require (VMAVALARA_CLASS_PATH.DS.'CancelTaxResult.class.php');
+		if(!class_exists('CancelTaxResult')) require (VMAVALARA_CLASS_PATH.'/CancelTaxResult.class.php');
 
 		$result = null;
         $profileHeader = new SoapHeader('http://avatax.avalara.com/services','Profile',new SoapVar($this->profileXML(),XSD_ANYXML));
         $securityHeader = new SoapHeader('http://avatax.avalara.com/services','Security',new SoapVar($this->securityXML(),XSD_ANYXML));
 
-		if(!class_exists('Message')) require (VMAVALARA_CLASS_PATH.DS.'Message.class.php');
+		if(!class_exists('Message')) require (VMAVALARA_CLASS_PATH.'/Message.class.php');
 
         $result = $this->__soapCall($n,$args,NULL,array($securityHeader,$profileHeader));
         return $result;

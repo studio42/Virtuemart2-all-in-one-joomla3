@@ -33,14 +33,14 @@ if($task=='updateDatabase'){
 	JSession::checkToken() or JSession::checkToken('get') or jexit('Invalid Token, in ' . JRequest::getWord('task'));
 
 	//Update Tables
-	if (!class_exists( 'VmConfig' )) require(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_virtuemart'.DS.'helpers'.DS.'config.php');
+	if (!class_exists( 'VmConfig' )) require(JPATH_ADMINISTRATOR.'/components/com_virtuemart/helpers/config.php');
 	if(!class_exists('Permissions'))
-	require(JPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_virtuemart' . DS . 'helpers' . DS . 'permissions.php');
+	require(JPATH_ROOT.'/administrator/components/com_virtuemart/helpers/permissions.php');
 	if(!Permissions::getInstance()->check('admin')){
 		$msg = 'Forget IT';
 		$this->setRedirect('index.php?option=com_virtuemart_allinone', $msg);
 	} else {
-		if(!class_exists('com_virtuemart_allinoneInstallerScript')) require(JPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_virtuemart_allinone'.DS.'script.vmallinone.php');
+		if(!class_exists('com_virtuemart_allinoneInstallerScript')) require(JPATH_ROOT.'/administrator/components/com_virtuemart_allinone/script.vmallinone.php');
 		$updater = new com_virtuemart_allinoneInstallerScript();
 		$updater->vmInstall();
 		$app = JFactory::getApplication();

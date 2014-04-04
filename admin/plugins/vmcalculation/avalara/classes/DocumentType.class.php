@@ -13,7 +13,7 @@ die('Direct Access to ' . basename(__FILE__) . ' is not allowed.');
  * @copyright � 2004 - 2011 Avalara, Inc.  All rights reserved.
  * @package   Tax
  */
-if(!class_exists('Enum')) require (VMAVALARA_CLASS_PATH.DS.'Enum.class.php');
+if(!class_exists('Enum')) require (VMAVALARA_CLASS_PATH.'/Enum.class.php');
 
 class DocumentType extends Enum
 {

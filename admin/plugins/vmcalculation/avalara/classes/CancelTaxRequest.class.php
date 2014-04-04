@@ -21,7 +21,7 @@ die('Direct Access to ' . basename(__FILE__) . ' is not allowed.');
  * @copyright � 2004 - 2011 Avalara, Inc.  All rights reserved.
  * @package   Tax
  */
-if(!class_exists('TaxRequest')) require (VMAVALARA_CLASS_PATH.DS.'TaxRequest.class.php');
+if(!class_exists('TaxRequest')) require (VMAVALARA_CLASS_PATH.'/TaxRequest.class.php');
 
 class CancelTaxRequest extends TaxRequest
 {
@@ -29,8 +29,8 @@ class CancelTaxRequest extends TaxRequest
 
 	public function __construct()
 	{
-		if(!class_exists('DocumentType')) require (VMAVALARA_CLASS_PATH.DS.'DocumentType.class.php');
-		if(!class_exists('CancelCode')) require (VMAVALARA_CLASS_PATH.DS.'CancelCode.class.php');
+		if(!class_exists('DocumentType')) require (VMAVALARA_CLASS_PATH.'/DocumentType.class.php');
+		if(!class_exists('CancelCode')) require (VMAVALARA_CLASS_PATH.'/CancelCode.class.php');
 		$this->DocType = DocumentType::$SalesInvoice;  // this is right Document
 		$this->CancelCode = CancelCode::$Unspecified;
 	}

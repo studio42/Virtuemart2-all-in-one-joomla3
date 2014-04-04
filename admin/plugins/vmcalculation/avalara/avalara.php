@@ -16,7 +16,7 @@ die('Direct Access to ' . basename(__FILE__) . ' is not allowed.');
  *
  */
 
-if (!class_exists('vmCalculationPlugin')) require(JPATH_VM_PLUGINS.DS.'vmcalculationplugin.php');
+if (!class_exists('vmCalculationPlugin')) require(JPATH_VM_PLUGINS.'/vmcalculationplugin.php');
 
 defined('AVATAX_DEBUG') or define('AVATAX_DEBUG', 0);
 
@@ -55,15 +55,15 @@ class plgVmCalculationAvalara extends vmCalculationPlugin {
 		$this->_tablepkey = 'id';
 		$this->_tableId = 'id';
 		if (JVM_VERSION === 2) {
-			define ('VMAVALARA_PATH', JPATH_ROOT . DS . 'plugins' . DS . 'vmcalculation' . DS . 'avalara' );
+			define ('VMAVALARA_PATH', JPATH_ROOT .'/plugins/vmcalculation/avalara' );
 		} else {
-			define ('VMAVALARA_PATH', JPATH_ROOT . DS . 'plugins' . DS . 'vmcalculation' );
+			define ('VMAVALARA_PATH', JPATH_ROOT .'/plugins/vmcalculation' );
 		}
-		define('VMAVALARA_CLASS_PATH', VMAVALARA_PATH . DS . 'classes' );
+		define('VMAVALARA_CLASS_PATH', VMAVALARA_PATH .'/classes' );
 
-		require(VMAVALARA_PATH.DS.'AvaTax.php');	// include in all Avalara Scripts
+		require(VMAVALARA_PATH.'/AvaTax.php');	// include in all Avalara Scripts
 
-		if(!class_exists('ATConfig')) require (VMAVALARA_CLASS_PATH.DS.'ATConfig.class.php');
+		if(!class_exists('ATConfig')) require (VMAVALARA_CLASS_PATH.'/ATConfig.class.php');
 
 	}
 
@@ -176,7 +176,7 @@ class plgVmCalculationAvalara extends vmCalculationPlugin {
 	public function plgVmStorePluginInternalDataCalc(&$data){
 
 		if (!class_exists ('TableCalcs')) {
-			require(JPATH_VM_ADMINISTRATOR . DS . 'tables' . DS . 'calcs.php');
+			require(JPATH_VM_ADMINISTRATOR .'/tables/calcs.php');
 		}
 		if(!empty($data['avatax_virtuemart_country_id'])){
 			$data['avatax_virtuemart_country_id'] = serialize($data['avatax_virtuemart_country_id']);
@@ -196,7 +196,7 @@ class plgVmCalculationAvalara extends vmCalculationPlugin {
 		$calcData->setParameterable ($this->_xParams, $this->_varsToPushParam);
 
 		if (!class_exists ('VmTable')) {
-			require(JPATH_VM_ADMINISTRATOR . DS . 'helpers' . DS . 'vmtable.php');
+			require(JPATH_VM_ADMINISTRATOR .'/helpers/vmtable.php');
 		}
 		VmTable::bindParameterable ($calcData, $this->_xParams, $this->_varsToPushParam);
 		if(!is_array($calcData->avatax_virtuemart_country_id)){
@@ -216,7 +216,7 @@ class plgVmCalculationAvalara extends vmCalculationPlugin {
 		if(is_object($calc)){
 			$calc = get_object_vars($calc);
 		}
-		if(!class_exists('TextCase')) require (VMAVALARA_CLASS_PATH.DS.'TextCase.class.php');
+		if(!class_exists('TextCase')) require (VMAVALARA_CLASS_PATH.'/TextCase.class.php');
 
 		$__wsdldir = VMAVALARA_CLASS_PATH."/wsdl";
 		$standard = array(
@@ -239,7 +239,7 @@ class plgVmCalculationAvalara extends vmCalculationPlugin {
 
 		//VmConfig::$echoDebug = TRUE;
 		//if(!is_object())avadebug($calc);
-		if(!class_exists('ATConfig')) require (VMAVALARA_CLASS_PATH.DS.'ATConfig.class.php');
+		if(!class_exists('ATConfig')) require (VMAVALARA_CLASS_PATH.'/ATConfig.class.php');
 
 		//Set this to TRUE for development account
 		if($calc['dev']){
@@ -271,16 +271,16 @@ class plgVmCalculationAvalara extends vmCalculationPlugin {
 		$html = '';
 		$this->newATConfig($calc);
 
-		if(!class_exists('TaxServiceSoap')) require (VMAVALARA_CLASS_PATH.DS.'TaxServiceSoap.class.php');
+		if(!class_exists('TaxServiceSoap')) require (VMAVALARA_CLASS_PATH.'/TaxServiceSoap.class.php');
 		$client = new TaxServiceSoap($this->_connectionType);
 
 		try
 		{
-			if(!class_exists('PingResult')) require (VMAVALARA_CLASS_PATH.DS.'PingResult.class.php');
+			if(!class_exists('PingResult')) require (VMAVALARA_CLASS_PATH.'/PingResult.class.php');
 			$result = $client->ping("TEST");
 			vmInfo('Avalara Ping ResultCode is: '. $result->getResultCode() );
 
-			if(!class_exists('SeverityLevel')) require (VMAVALARA_CLASS_PATH.DS.'SeverityLevel.class.php');
+			if(!class_exists('SeverityLevel')) require (VMAVALARA_CLASS_PATH.'/SeverityLevel.class.php');
 			if($result->getResultCode() != SeverityLevel::$Success){
 				foreach($result->Messages() as $msg){
 					$html .= $msg->Name().": ".$msg->Summary()."<br />";
@@ -394,7 +394,7 @@ class plgVmCalculationAvalara extends vmCalculationPlugin {
 					$this->addresses = $this->fillValidateAvalaraAddress($rule,$vmadd);
 				}
 				if($this->addresses){
-					if (!class_exists ('calculationHelper')) require(JPATH_VM_ADMINISTRATOR . DS . 'helpers' . DS . 'calculationh.php');
+					if (!class_exists ('calculationHelper')) require(JPATH_VM_ADMINISTRATOR .'/helpers/calculationh.php');
 					$calculator = calculationHelper::getInstance ();
 					$orderModel = VmModel::getModel('orders');
 					$invoiceNumber = 'onr_'.$order['details']['BT']->order_number;
@@ -431,7 +431,7 @@ class plgVmCalculationAvalara extends vmCalculationPlugin {
 			}
 			//We need for the tax calculation the shipment Address
 			//We have this usually in our cart.
-			if (!class_exists('VirtueMartCart')) require(JPATH_VM_SITE . DS . 'helpers' . DS . 'cart.php');
+			if (!class_exists('VirtueMartCart')) require(JPATH_VM_SITE .'/helpers/cart.php');
 			$cart = VirtueMartCart::getCart();
 
 			//Test first for ST
@@ -497,10 +497,10 @@ class plgVmCalculationAvalara extends vmCalculationPlugin {
 				}
 				$config = $this->newATConfig($calc);
 
-				if(!class_exists('AddressServiceSoap')) require (VMAVALARA_CLASS_PATH.DS.'AddressServiceSoap.class.php');
+				if(!class_exists('AddressServiceSoap')) require (VMAVALARA_CLASS_PATH.'/AddressServiceSoap.class.php');
 				$client = new AddressServiceSoap($this->_connectionType,$config);
 
-				if(!class_exists('Address')) require (VMAVALARA_CLASS_PATH.DS.'Address.class.php');
+				if(!class_exists('Address')) require (VMAVALARA_CLASS_PATH.'/Address.class.php');
 				$address = new Address();
 				if(isset($vmadd['address_1'])) $address->setLine1($vmadd['address_1']);
 				if(isset($vmadd['address_2'])) $address->setLine2($vmadd['address_2']);
@@ -518,8 +518,8 @@ class plgVmCalculationAvalara extends vmCalculationPlugin {
 
 				if(isset($vmadd['zip'])) $address->setPostalCode($vmadd['zip']);
 
-				if(!class_exists('SeverityLevel')) require (VMAVALARA_CLASS_PATH.DS.'SeverityLevel.class.php');
-				if(!class_exists('Message')) require (VMAVALARA_CLASS_PATH.DS.'Message.class.php');
+				if(!class_exists('SeverityLevel')) require (VMAVALARA_CLASS_PATH.'/SeverityLevel.class.php');
+				if(!class_exists('Message')) require (VMAVALARA_CLASS_PATH.'/Message.class.php');
 
 				//if($calc->vAddress==0){
 			/*	if(isset($vmadd['country']) and $vmadd['country']!= 'US' and $vmadd['country']!= 'CA'){
@@ -538,9 +538,9 @@ class plgVmCalculationAvalara extends vmCalculationPlugin {
 				$validatedAddress = $session->get ('vm_avatax_address_checked.' . $hash, FALSE, 'vm');
 				if(!$validatedAddress){
 
-					if(!class_exists('ValidateResult')) require (VMAVALARA_CLASS_PATH.DS.'ValidateResult.class.php');
-					if(!class_exists('ValidateRequest')) require (VMAVALARA_CLASS_PATH.DS.'ValidateRequest.class.php');
-					if(!class_exists('ValidAddress')) require (VMAVALARA_CLASS_PATH.DS.'ValidAddress.class.php');
+					if(!class_exists('ValidateResult')) require (VMAVALARA_CLASS_PATH.'/ValidateResult.class.php');
+					if(!class_exists('ValidateRequest')) require (VMAVALARA_CLASS_PATH.'/ValidateRequest.class.php');
+					if(!class_exists('ValidAddress')) require (VMAVALARA_CLASS_PATH.'/ValidAddress.class.php');
 
 					//TODO add customer code //shopper_number
 					try
@@ -597,7 +597,7 @@ class plgVmCalculationAvalara extends vmCalculationPlugin {
 
 	private function getCartProducts($calculationHelper){
 
-			if(!class_exists('VirtueMartCart')) require(JPATH_VM_SITE.DS.'helpers'.DS.'cart.php');
+			if(!class_exists('VirtueMartCart')) require(JPATH_VM_SITE.'/helpers/cart.php');
 			$cart = VirtueMartCart::getCart();
 			$count = count($cart->products);
 			if($count===0){
@@ -754,15 +754,15 @@ class plgVmCalculationAvalara extends vmCalculationPlugin {
 
 	function createStandardRequest($calc,$products,$sign=1){
 
-		if(!class_exists('TaxServiceSoap')) require (VMAVALARA_CLASS_PATH.DS.'TaxServiceSoap.class.php');
-		if(!class_exists('DocumentType')) require (VMAVALARA_CLASS_PATH.DS.'DocumentType.class.php');
-		if(!class_exists('DetailLevel')) require (VMAVALARA_CLASS_PATH.DS.'DetailLevel.class.php');
-		if(!class_exists('Line')) require (VMAVALARA_CLASS_PATH.DS.'Line.class.php');
-		if(!class_exists('ServiceMode')) require (VMAVALARA_CLASS_PATH.DS.'ServiceMode.class.php');
-		if(!class_exists('Line')) require (VMAVALARA_CLASS_PATH.DS.'Line.class.php');
-		if(!class_exists('GetTaxRequest')) require (VMAVALARA_CLASS_PATH.DS.'GetTaxRequest.class.php');
-		if(!class_exists('GetTaxResult')) require (VMAVALARA_CLASS_PATH.DS.'GetTaxResult.class.php');
-		if(!class_exists('Address')) require (VMAVALARA_CLASS_PATH.DS.'Address.class.php');
+		if(!class_exists('TaxServiceSoap')) require (VMAVALARA_CLASS_PATH.'/TaxServiceSoap.class.php');
+		if(!class_exists('DocumentType')) require (VMAVALARA_CLASS_PATH.'/DocumentType.class.php');
+		if(!class_exists('DetailLevel')) require (VMAVALARA_CLASS_PATH.'/DetailLevel.class.php');
+		if(!class_exists('Line')) require (VMAVALARA_CLASS_PATH.'/Line.class.php');
+		if(!class_exists('ServiceMode')) require (VMAVALARA_CLASS_PATH.'/ServiceMode.class.php');
+		if(!class_exists('Line')) require (VMAVALARA_CLASS_PATH.'/Line.class.php');
+		if(!class_exists('GetTaxRequest')) require (VMAVALARA_CLASS_PATH.'/GetTaxRequest.class.php');
+		if(!class_exists('GetTaxResult')) require (VMAVALARA_CLASS_PATH.'/GetTaxResult.class.php');
+		if(!class_exists('Address')) require (VMAVALARA_CLASS_PATH.'/Address.class.php');
 
 		if(is_object($calc)){
 			$calc = get_object_vars($calc);
@@ -774,7 +774,7 @@ class plgVmCalculationAvalara extends vmCalculationPlugin {
 		//So when the vendor has a shipment address, we assume that it is his warehouse
 		//Later we can combine products with shipment addresses for different warehouse (yehye, future music)
 		//But for now we just use the BT address
-		if (!class_exists ('VirtueMartModelVendor')) require(JPATH_VM_ADMINISTRATOR . DS . 'models' . DS . 'vendor.php');
+		if (!class_exists ('VirtueMartModelVendor')) require(JPATH_VM_ADMINISTRATOR .'/models/vendor.php');
 
 		$userId = VirtueMartModelVendor::getUserIdByVendorId ($calc['virtuemart_vendor_id']);
 		$userModel = VmModel::getModel ('user');
@@ -800,7 +800,7 @@ class plgVmCalculationAvalara extends vmCalculationPlugin {
 			return FALSE;
 		}
 
-		if (!class_exists ('calculationHelper')) require(JPATH_VM_ADMINISTRATOR . DS . 'helpers' . DS . 'calculationh.php');
+		if (!class_exists ('calculationHelper')) require(JPATH_VM_ADMINISTRATOR .'/helpers/calculationh.php');
 		$calculator = calculationHelper::getInstance ();
 		$request->setCurrencyCode($calculator->_currencyDisplay->_vendorCurrency_code_3); //CurrencyCode
 		$request->setDestinationAddress	($destination);     //Address
@@ -848,7 +848,7 @@ class plgVmCalculationAvalara extends vmCalculationPlugin {
 
 				//avadebug('AvaTax setTaxCode Product has categories !',$catNames);
 				if (!class_exists ('TableCategories')) {
-					require(JPATH_VM_ADMINISTRATOR . DS . 'tables' . DS . 'categories.php');
+					require(JPATH_VM_ADMINISTRATOR .'/tables/categories.php');
 				}
 				$db = JFactory::getDbo();
 				$catTable = new TableCategories($db);
@@ -906,8 +906,8 @@ class plgVmCalculationAvalara extends vmCalculationPlugin {
 
 		try
 		{
-			if(!class_exists('TaxLine')) require (VMAVALARA_CLASS_PATH.DS.'TaxLine.class.php');
-			if(!class_exists('TaxDetail')) require (VMAVALARA_CLASS_PATH.DS.'TaxDetail.class.php');
+			if(!class_exists('TaxLine')) require (VMAVALARA_CLASS_PATH.'/TaxLine.class.php');
+			if(!class_exists('TaxDetail')) require (VMAVALARA_CLASS_PATH.'/TaxDetail.class.php');
 
 			//avadebug('executeRequest $request',$request);
 			$_taxResult = $client->getTax($request);
@@ -1009,13 +1009,13 @@ class plgVmCalculationAvalara extends vmCalculationPlugin {
 			return false;
 		}
 
-		if(!class_exists('TaxServiceSoap')) require (VMAVALARA_CLASS_PATH.DS.'TaxServiceSoap.class.php');
-		if(!class_exists('DocumentType')) require (VMAVALARA_CLASS_PATH.DS.'DocumentType.class.php');
-		if(!class_exists('DetailLevel')) require (VMAVALARA_CLASS_PATH.DS.'DetailLevel.class.php');
-		if(!class_exists('Line')) require (VMAVALARA_CLASS_PATH.DS.'Line.class.php');
-		if(!class_exists('ServiceMode')) require (VMAVALARA_CLASS_PATH.DS.'ServiceMode.class.php');
-		if(!class_exists('Line')) require (VMAVALARA_CLASS_PATH.DS.'Line.class.php');
-		if(!class_exists('GetTaxResult')) require (VMAVALARA_CLASS_PATH.DS.'GetTaxResult.class.php');
+		if(!class_exists('TaxServiceSoap')) require (VMAVALARA_CLASS_PATH.'/TaxServiceSoap.class.php');
+		if(!class_exists('DocumentType')) require (VMAVALARA_CLASS_PATH.'/DocumentType.class.php');
+		if(!class_exists('DetailLevel')) require (VMAVALARA_CLASS_PATH.'/DetailLevel.class.php');
+		if(!class_exists('Line')) require (VMAVALARA_CLASS_PATH.'/Line.class.php');
+		if(!class_exists('ServiceMode')) require (VMAVALARA_CLASS_PATH.'/ServiceMode.class.php');
+		if(!class_exists('Line')) require (VMAVALARA_CLASS_PATH.'/Line.class.php');
+		if(!class_exists('GetTaxResult')) require (VMAVALARA_CLASS_PATH.'/GetTaxResult.class.php');
 
 		$this->addresses = $this->fillValidateAvalaraAddress($calc,$orderDetails['details']['BT']);
 
@@ -1148,9 +1148,9 @@ class plgVmCalculationAvalara extends vmCalculationPlugin {
 		}
 		if(is_array($invoiceNumber)) $invoiceNumber = $invoiceNumber[0];#
 
-		if(!function_exists('EnsureIsArray')) require(VMAVALARA_PATH.DS.'AvaTax.php');	// include in all Avalara Scripts
-		if(!class_exists('TaxServiceSoap')) require (VMAVALARA_CLASS_PATH.DS.'TaxServiceSoap.class.php');
-		if(!class_exists('CancelTaxRequest')) require (VMAVALARA_CLASS_PATH.DS.'CancelTaxRequest.class.php');
+		if(!function_exists('EnsureIsArray')) require(VMAVALARA_PATH.'/AvaTax.php');	// include in all Avalara Scripts
+		if(!class_exists('TaxServiceSoap')) require (VMAVALARA_CLASS_PATH.'/TaxServiceSoap.class.php');
+		if(!class_exists('CancelTaxRequest')) require (VMAVALARA_CLASS_PATH.'/CancelTaxRequest.class.php');
 
 		$this->newATConfig($calc);
 
@@ -1230,8 +1230,8 @@ class plgVmCalculationAvalara extends vmCalculationPlugin {
 
 	private function createTaxOverride($date,$orderStatus='R',$reason=''){
 
-		if(!class_exists('TaxOverride')) require (VMAVALARA_CLASS_PATH.DS.'TaxOverride.class.php');
-		if(!class_exists('TaxOverrideType')) require (VMAVALARA_CLASS_PATH.DS.'TaxOverrideType.class.php');
+		if(!class_exists('TaxOverride')) require (VMAVALARA_CLASS_PATH.'/TaxOverride.class.php');
+		if(!class_exists('TaxOverrideType')) require (VMAVALARA_CLASS_PATH.'/TaxOverrideType.class.php');
 		$taxOverride = new TaxOverride();
 		$taxOverride->setTaxOverrideType(TaxOverrideType::$TaxDate);   //TaxOverrideType $None, $TaxAmount, $Exemption, $TaxDate ???
 		//$taxOverride->setTaxAmount($value);         //decimal
@@ -1250,7 +1250,7 @@ class plgVmCalculationAvalara extends vmCalculationPlugin {
 
 		$app = JFactory::getApplication();
 		if($app->isSite()){
-			if (!class_exists('VirtueMartCart')) require(JPATH_VM_SITE . DS . 'helpers' . DS . 'cart.php');
+			if (!class_exists('VirtueMartCart')) require(JPATH_VM_SITE .'/helpers/cart.php');
 			$cart = VirtueMartCart::getCart();
 			$cart->blockConfirm();
 		}

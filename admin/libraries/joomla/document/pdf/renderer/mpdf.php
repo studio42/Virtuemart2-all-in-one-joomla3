@@ -10,7 +10,7 @@
 defined('JPATH_PLATFORM') or die;
 
 
-if(!file_exists(JPATH_LIBRARIES.DS.'mpdf/mpdf.php')){
+if(!file_exists(JPATH_LIBRARIES.'/mpdf/mpdf.php')){
 	JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_APPLICATION_LOAD','mPDF'));
 } else {
 	if(!class_exists('mPDF'))	require_once(JPATH_LIBRARIES.'/mpdf/mpdf.php');

@@ -13,13 +13,13 @@ defined('_JEXEC') or  die( 'Direct Access to '.basename(__FILE__).' is not allow
 *
 * www.virtuemart.net
 */
-if (!class_exists( 'VmConfig' )) require(JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_virtuemart'.DS.'helpers'.DS.'config.php');
+if (!class_exists( 'VmConfig' )) require(JPATH_ADMINISTRATOR .'/components/com_virtuemart/helpers/config.php');
 VmConfig::loadConfig();
-if (!class_exists( 'VmImage' )) require(JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_virtuemart'.DS.'helpers'.DS.'image.php');
-if(!class_exists('TableMedias')) require(JPATH_VM_ADMINISTRATOR.DS.'tables'.DS.'medias.php');
-if(!class_exists('TableManufacturer_medias')) require(JPATH_VM_ADMINISTRATOR.DS.'tables'.DS.'manufacturer_medias.php');
-if(!class_exists('TableManufacturers')) require(JPATH_VM_ADMINISTRATOR.DS.'tables'.DS.'manufacturers.php');
+if (!class_exists( 'VmImage' )) require(JPATH_ADMINISTRATOR .'/components/com_virtuemart/helpers/image.php');
+if(!class_exists('TableMedias')) require(JPATH_VM_ADMINISTRATOR.'/tables/medias.php');
+if(!class_exists('TableManufacturer_medias')) require(JPATH_VM_ADMINISTRATOR.'/tables/manufacturer_medias.php');
+if(!class_exists('TableManufacturers')) require(JPATH_VM_ADMINISTRATOR.'/tables/manufacturers.php');
 if (!class_exists( 'VirtueMartModelManufacturer' )){
-   JLoader::import( 'manufacturer', JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_virtuemart' . DS . 'models' );
+   JLoader::import( 'manufacturer', JPATH_ADMINISTRATOR .'/components/com_virtuemart/models' );
 }
 ?>

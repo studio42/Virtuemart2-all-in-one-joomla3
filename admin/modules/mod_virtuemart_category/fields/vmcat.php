@@ -10,13 +10,13 @@
 defined('JPATH_PLATFORM') or die;
 
 if (!class_exists( 'VmConfig' )){
-	require(JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_virtuemart'.DS.'helpers'.DS.'config.php');
+	require(JPATH_ADMINISTRATOR .'/components/com_virtuemart/helpers/config.php');
 	VmConfig::loadConfig();
 }
 if (!class_exists('ShopFunctions'))
-    require(JPATH_VM_ADMINISTRATOR . DS . 'helpers' . DS . 'shopfunctions.php');
+    require(JPATH_VM_ADMINISTRATOR .'/helpers/shopfunctions.php');
 if (!class_exists('TableCategories'))
-    require(JPATH_VM_ADMINISTRATOR . DS . 'tables' . DS . 'categories.php');
+    require(JPATH_VM_ADMINISTRATOR .'/tables/categories.php');
 
 /**
  * Form Field class for the Joomla Platform.

@@ -50,10 +50,10 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 			jimport ('joomla.filesystem.file');
 			jimport ('joomla.installer.installer');
 
-			$this->createIndexFolder (JPATH_ROOT . DS . 'plugins' . DS . 'vmcalculation');
-			$this->createIndexFolder (JPATH_ROOT . DS . 'plugins' . DS . 'vmcustom');
-			$this->createIndexFolder (JPATH_ROOT . DS . 'plugins' . DS . 'vmpayment');
-			$this->createIndexFolder (JPATH_ROOT . DS . 'plugins' . DS . 'vmshipment');
+			$this->createIndexFolder (JPATH_ROOT .'/plugins/vmcalculation');
+			$this->createIndexFolder (JPATH_ROOT .'/plugins/vmcustom');
+			$this->createIndexFolder (JPATH_ROOT .'/plugins/vmpayment');
+			$this->createIndexFolder (JPATH_ROOT .'/plugins/vmshipment');
 
 			$this->path = JInstaller::getInstance ()->getPath ('extension_administrator');
 
@@ -230,7 +230,7 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 
 			if ($task != 'updateDatabase') {
 				$data = array();
-				$src = $this->path . DS . 'plugins' . DS . $group . DS . $element;
+				$src = $this->path .'/plugins' . DS . $group . DS . $element;
 
 				if ($createJPluginTable) {
 					if (version_compare (JVERSION, '1.7.0', 'ge')) {
@@ -313,7 +313,7 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 			}
 			if (version_compare (JVERSION, '1.7.0', 'ge')) {
 				// Joomla! 1.7 code here
-				$dst = JPATH_ROOT . DS . 'plugins' . DS . $group . DS . $element;
+				$dst = JPATH_ROOT .'/plugins' . DS . $group . DS . $element;
 
 			}
 
@@ -332,7 +332,7 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 
 			//Update Tables
 			if (!class_exists ('VmConfig')) {
-				require(JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_virtuemart' . DS . 'helpers' . DS . 'config.php');
+				require(JPATH_ADMINISTRATOR .'/components/com_virtuemart/helpers/config.php');
 			}
 
 			if (class_exists ('VmConfig')) {
@@ -367,7 +367,7 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 					$app->enqueueMessage (get_class ($this) . ':: VirtueMart2 update ' . $tablename);
 
 					if (!class_exists ('GenericTableUpdater')) {
-						require(JPATH_VM_ADMINISTRATOR . DS . 'helpers' . DS . 'tableupdater.php');
+						require(JPATH_VM_ADMINISTRATOR .'/helpers/tableupdater.php');
 					}
 					$updater = new GenericTableUpdater();
 
@@ -399,7 +399,7 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 			$q = 'SELECT id FROM `#__modules` WHERE `module` = "' . $module . '" ';
 			$db->setQuery ($q);
 			$id = $db->loadResult ();
-			$src = JPATH_ROOT . DS . 'modules' . DS . $module;
+			$src = JPATH_ROOT .'/modules' . DS . $module;
 
 			if (!empty($id)) {
 				return;
@@ -663,8 +663,8 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 		public function createIndexFolder ($path) {
 
 			if (JFolder::create ($path)) {
-				if (!JFile::exists ($path . DS . 'index.html')) {
-					JFile::copy (JPATH_ROOT . DS . 'components' . DS . 'index.html', $path . DS . 'index.html');
+				if (!JFile::exists ($path .'/index.html')) {
+					JFile::copy (JPATH_ROOT .'/components/index.html', $path .'/index.html');
 				}
 				return TRUE;
 			}

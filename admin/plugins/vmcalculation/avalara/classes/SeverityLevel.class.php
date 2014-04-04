@@ -15,7 +15,7 @@ die('Direct Access to ' . basename(__FILE__) . ' is not allowed.');
  * @package   Address
  */
 
-if(!class_exists('Enum')) require (VMAVALARA_CLASS_PATH.DS.'Enum.class.php');
+if(!class_exists('Enum')) require (VMAVALARA_CLASS_PATH.'/Enum.class.php');
 
 class SeverityLevel extends Enum
 {

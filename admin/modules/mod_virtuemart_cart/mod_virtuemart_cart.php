@@ -23,13 +23,13 @@ $jsVars  = ' jQuery(document).ready(function(){
 
 });' ;
 
-if (!class_exists( 'VmConfig' )) require(JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_virtuemart'.DS.'helpers'.DS.'config.php');
+if (!class_exists( 'VmConfig' )) require(JPATH_ADMINISTRATOR .'/components/com_virtuemart/helpers/config.php');
 
 VmConfig::loadConfig();
 VmConfig::loadJLang('mod_virtuemart_cart', true);
 
 
-if(!class_exists('VirtueMartCart')) require(JPATH_VM_SITE.DS.'helpers'.DS.'cart.php');
+if(!class_exists('VirtueMartCart')) require(JPATH_VM_SITE.'/helpers/cart.php');
 $cart = VirtueMartCart::getCart(false);
 $data = $cart->prepareAjaxData();
 $lang = JFactory::getLanguage();

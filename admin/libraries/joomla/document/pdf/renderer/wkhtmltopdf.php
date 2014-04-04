@@ -10,7 +10,7 @@
 defined('JPATH_PLATFORM') or die;
 
 
-if(!file_exists(JPATH_LIBRARIES.DS.'wkhtmltopdf/wkhtmltopdf.php')){
+if(!file_exists(JPATH_LIBRARIES.'/wkhtmltopdf/wkhtmltopdf.php')){
 	JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_APPLICATION_LOAD','wkhtmltopdf'));
 } else {
 	if(!class_exists('WkHtmlToPdf'))	require_once(JPATH_LIBRARIES.'/wkhtmltopdf/wkhtmltopdf.php');

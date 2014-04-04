@@ -1,3 +1,5 @@
+Now compatible with joomla 3.2.3
+
 Virtuemart 2 all-in-one pack for joomla 3
 ===========================
 

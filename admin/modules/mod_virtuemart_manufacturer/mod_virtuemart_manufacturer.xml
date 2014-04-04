@@ -20,34 +20,32 @@
 	<language tag="en-GB">en-GB/en-GB.mod_virtuemart_manufacturer.sys.ini</language>
     </languages>
 	<config>
-	<fields name="params">
-		<fieldset name="options" addfieldpath="/administrator/components/com_virtuemart/models/fields">
-        <fields name = "params">
+        <fields name = "params" addfieldpath="/administrator/components/com_virtuemart/models/fields">
             <fieldset name="basic">
                 <field name="show" type="list" default="all"
-			label="MOD_VIRTUEMART_MANUFACTURER_SHOW"
-			description="MOD_VIRTUEMART_MANUFACTURER_SHOW_DESC">
+					label="MOD_VIRTUEMART_MANUFACTURER_SHOW"
+					description="MOD_VIRTUEMART_MANUFACTURER_SHOW_DESC">
                     <option value="all">MOD_VIRTUEMART_MANUFACTURER_IMAGE_NAME</option>
                     <option value="image">MOD_VIRTUEMART_MANUFACTURER_THUMB_IMAGE</option>
                     <option value="text">MOD_VIRTUEMART_MANUFACTURER_NAME</option>
                 </field>
                 <field name="display_style" type="list" default="list"
-			label="MOD_VIRTUEMART_MANUFACTURER_DISPLAY_STYLE"
-			description="MOD_VIRTUEMART_MANUFACTURER_DISPLAY_STYLE_DESC">
+					label="MOD_VIRTUEMART_MANUFACTURER_DISPLAY_STYLE"
+					description="MOD_VIRTUEMART_MANUFACTURER_DISPLAY_STYLE_DESC">
                     <option value="list">MOD_VIRTUEMART_MANUFACTURER_LIST</option>
                     <option value="div">MOD_VIRTUEMART_MANUFACTURER_DIV</option>
                 </field>
                 <field name="manufacturers_per_row" type="text" default=""
-			label="MOD_VIRTUEMART_MANUFACTURER_ROW"
-			description="MOD_VIRTUEMART_MANUFACTURER_ROW_DESC" />
+					label="MOD_VIRTUEMART_MANUFACTURER_ROW"
+					description="MOD_VIRTUEMART_MANUFACTURER_ROW_DESC" />
                 <field name="@spacer" type="spacer" default="" label="" description="" />
                 <field name="headerText" type="textarea" cols="40" rows="3" default=""
-			label="MOD_VIRTUEMART_MANUFACTURER_HEADER_TEXT"
-			description="MOD_VIRTUEMART_MANUFACTURER_HEADER_TEXT_DESC" />
+					label="MOD_VIRTUEMART_MANUFACTURER_HEADER_TEXT"
+					description="MOD_VIRTUEMART_MANUFACTURER_HEADER_TEXT_DESC" />
                 <field name="footerText" type="textarea" cols="40" rows="3" default=""
-			label="MOD_VIRTUEMART_MANUFACTURER_FOOTER_TEXT"
-			description="MOD_VIRTUEMART_MANUFACTURER_FOOTER_TEXT_DESC" />
-            </fieldset>
+					label="MOD_VIRTUEMART_MANUFACTURER_FOOTER_TEXT"
+					description="MOD_VIRTUEMART_MANUFACTURER_FOOTER_TEXT_DESC" />
+		</fieldset>
 		<fieldset name="advanced">
 			<field name="class_sfx" type="text" default="" label="Menu Class Suffix" description="A suffix to be applied to the css class of the menu items" />
 			<field name="layout" type="modulelayout"

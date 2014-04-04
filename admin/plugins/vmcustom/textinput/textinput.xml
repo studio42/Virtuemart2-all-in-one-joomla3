@@ -20,10 +20,10 @@
 	<config>
 	<fields name="params">
 		<fieldset name="options" addfieldpath="/administrator/components/com_virtuemart/models/fields">
-			<fieldtype="vmjpluginwarning" />
-			<fieldname="custom_title" type="text" size="20"  default="COM_VIRTUEMART_COMMENT" label="VMCUSTOM_NAME_INFO" description="VMCUSTOM_NAME_INFO_DESC" />
-			<fieldname="custom_size" type="text"  size="15"  default="10" label="VMCUSTOM_TEXTINPUT_SIZE" description="VMCUSTOM_TEXTINPUT_SIZE_DESC" />
-			<fieldname="custom_price_by_letter" type="list"  default="0" label="VMCUSTOM_TEXTINPUT_PRICE_BY_LETTER_OR_INPUT" description="VMCUSTOM_TEXTINPUT_PRICE_BY_LETTER_OR_INPUT_DESC" >
+			<field type="vmjpluginwarning" />
+			<field name="custom_title" type="text" size="20"  default="COM_VIRTUEMART_COMMENT" label="VMCUSTOM_NAME_INFO" description="VMCUSTOM_NAME_INFO_DESC" />
+			<field name="custom_size" type="text"  size="15"  default="10" label="VMCUSTOM_TEXTINPUT_SIZE" description="VMCUSTOM_TEXTINPUT_SIZE_DESC" />
+			<field name="custom_price_by_letter" type="list"  default="0" label="VMCUSTOM_TEXTINPUT_PRICE_BY_LETTER_OR_INPUT" description="VMCUSTOM_TEXTINPUT_PRICE_BY_LETTER_OR_INPUT_DESC" >
 				<option value="0">VMCUSTOM_TEXTINPUT_PRICE_BY_INPUT</option>
 				<option value="1">VMCUSTOM_TEXTINPUT_PRICE_BY_LETTER</option>
 			</field>

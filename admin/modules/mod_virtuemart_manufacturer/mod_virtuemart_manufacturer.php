@@ -27,7 +27,8 @@ VmConfig::loadConfig();
 VmConfig::loadJLang('mod_virtuemart_manufacturer', true);
 $vendorId = JRequest::getInt('vendorid', 1);
 $model = VmModel::getModel('Manufacturer');
-
+$model->addvalidOrderingFieldName( array('slug') );
+$model->_selectedOrdering = 'slug' ;
 $display_style = 	$params->get( 'display_style', "div" ); // Display Style
 $manufacturers_per_row = $params->get( 'manufacturers_per_row', 1 ); // Display X manufacturers per Row
 $headerText = 		$params->get( 'headerText', '' ); // Display a Header Text

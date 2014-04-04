@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/module-install.dtd">
-<extension type="module" version="2.5" method="upgrade"> 
+<install type="module" version="2.5.0" client="site" method="upgrade">
     <name>VirtueMart Shopping Cart</name>
-    <creationDate>July 15 2013</creationDate>
+    <creationDate>March 17 2013</creationDate>
     <author>The VirtueMart Development Team</author>
     <authorUrl>http://www.virtuemart.net</authorUrl>
-    <copyright>${PHING.VM.COPYRIGH}</copyright>
+    <copyright>Copyright (C) 2004-2012 Virtuemart Team. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-    <version>2.0.22a</version>
+    <version>2.0.20b</version>
     <description>MOD_VIRTUEMART_CART_DESC</description>
     <files>
         <filename module="mod_virtuemart_cart">mod_virtuemart_cart.php</filename>
@@ -15,43 +14,32 @@
         <filename>tmpl/default.php</filename>
         <filename>tmpl/index.html</filename>
     </files>
-    <params>
-        <param name="moduleclass_sfx" type="text" default=""
-			label="Module Class Suffix"
-			description="A suffix to be applied to the css class of the module (table.moduletable), this allows individual module styling" />
-        <param name="show_price" type="list" default="1"
-			label="MOD_VIRTUEMART_CART_SHOW_PRICE"
-			description="MOD_VIRTUEMART_CART_SHOW_PRICE_DESC">
-            <option value="0">No</option>
-            <option value="1">Yes</option>
-        </param>
-        <br/>
-        <param name="show_product_list" type="list" default="1"
-			label="MOD_VIRTUEMART_CART_SHOW_LIST"
-			description="MOD_VIRTUEMART_CART_SHOW_LIST_DESC">
-            <option value="0">No</option>
-            <option value="1">Yes</option>
-        </param>
-    </params>
-	<config>
-	<fields name="params">
-		<fieldset name="options" addfieldpath="/administrator/components/com_virtuemart/models/fields">
-			<field name="moduleclass_sfx" type="text" default=""
-			label="Module Class Suffix"
-			description="A suffix to be applied to the css class of the module (table.moduletable), this allows individual module styling" />
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+				<field
+					name="moduleclass_sfx"
+					type="text"
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+					description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
                 <field name="show_price" type="list" default="1"
-			label="MOD_VIRTUEMART_CART_SHOW_PRICE"
-			description="MOD_VIRTUEMART_CART_SHOW_PRICE_DESC">
+					label="MOD_VIRTUEMART_CART_SHOW_PRICE"
+					description="MOD_VIRTUEMART_CART_SHOW_PRICE_DESC">
                     <option value="0">No</option>
                     <option value="1">Yes</option>
                 </field>
                 <field name="show_product_list" type="list" default="1"
-			label="MOD_VIRTUEMART_CART_SHOW_LIST"
-			description="MOD_VIRTUEMART_CART_SHOW_LIST_DESC">
+					label="MOD_VIRTUEMART_CART_SHOW_LIST"
+					description="MOD_VIRTUEMART_CART_SHOW_LIST_DESC">
                     <option value="0">No</option>
                     <option value="1">Yes</option>
-			</field>
-		</fieldset>
-	</fields>
+                </field>
+				<field
+					name="layout"
+					type="modulelayout"
+					label="JFIELD_ALT_LAYOUT_LABEL"
+					description="JFIELD_ALT_MODULE_LAYOUT_DESC" />
+            </fieldset>
+        </fields>
     </config>
-</extension>
+</install>

@@ -15,27 +15,10 @@
         <filename>tmpl/default.php</filename>
         <filename>tmpl/index.html</filename>
     </files>
-    <params>
-        <param name="text_before" type="textarea" cols="40" rows="3"
-			default="" label="MOD_VIRTUEMART_CURRENCIES_PRE_TEXT"
-			description="MOD_VIRTUEMART_CURRENCIES_PRE_TEXT_DESC" />
-        <!--param name="product_currency" type="text" default=""
-			label="MOD_VIRTUEMART_CURRENCIES_DISPLAY"
-			description="MOD_VIRTUEMART_CURRENCIES_DISPLAY_DESC" / -->
-        <param name="cache" type="radio" default="0"
-			label="Enable Cache"
-			description="Select whether to cache the content of this module">
-            <option value="0">No</option>
-            <option value="1">Yes</option>
-        </param>
-        <param name="moduleclass_sfx" type="text" default=""
-			label="Module Class Suffix"
-			description="A suffix to be applied to the css class of the module (table.moduletable), this allows individual module styling" />
-        <param name="class_sfx" type="text" default=""
-			label="Menu Class Suffix"
-			description="A suffix to be applied to the css class of the menu items" />
-    </params>
-
+    <languages folder="language">
+	<language tag="en-GB">en-GB/en-GB.mod_virtuemart_currencies.ini</language>
+	<language tag="en-GB">en-GB/en-GB.mod_virtuemart_currencies.sys.ini</language>
+    </languages>
     <config>
         <fields name="params">
             <fieldset name="basic">
@@ -46,21 +29,25 @@
 			label="MOD_VIRTUEMART_CURRENCIES_DISPLAY"
 			description="MOD_VIRTUEMART_CURRENCIES_DISPLAY_DESC" />
             </fieldset>
-            <fieldset
-				name="advanced">
-                <field name="cache" type="radio" default="0"
-			label="Enable Cache"
-			description="Select whether to cache the content of this module">
-                    <option value="0">No</option>
-                    <option value="1">Yes</option>
-                </field>
-                <field name="moduleclass_sfx" type="text" default=""
-			label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+		<fieldset name="advanced">
+			<field name="class_sfx" type="text" default="" label="Menu Class Suffix" description="A suffix to be applied to the css class of the menu items" />
+			<field name="layout" type="modulelayout"
+				label="JFIELD_ALT_LAYOUT_LABEL" description="JFIELD_ALT_MODULE_LAYOUT_DESC" />
+
+			<field name="moduleclass_sfx" type="text"
+				label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
 				description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
-                <field name="class_sfx" type="text" default=""
-			label="Menu Class Suffix"
-			description="A suffix to be applied to the css class of the menu items" />
-            </fieldset>
+
+			<field name="owncache" type="list" default="1"
+				label="COM_MODULES_FIELD_CACHING_LABEL" description="COM_MODULES_FIELD_CACHING_DESC" >
+				<option value="1">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING
+				</option>
+			</field>
+
+			<field name="cache_time" type="text" default="900"
+				label="COM_MODULES_FIELD_CACHE_TIME_LABEL" description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
+		</fieldset>
         </fields>
     </config>
 </extension>

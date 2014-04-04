@@ -28,7 +28,7 @@ if (!class_exists( 'VmConfig' )) require(JPATH_ADMINISTRATOR . DS . 'components'
 VmConfig::loadConfig();
 VmConfig::loadJLang('mod_virtuemart_cart', true);
 
-//This is strange we have the whole thing again in controllers/cart.php public function viewJS()
+
 if(!class_exists('VirtueMartCart')) require(JPATH_VM_SITE.DS.'helpers'.DS.'cart.php');
 $cart = VirtueMartCart::getCart(false);
 $data = $cart->prepareAjaxData();
@@ -40,7 +40,7 @@ else if ($data->totalProduct == 1) $data->totalProductTxt = JText::_('COM_VIRTUE
 else $data->totalProductTxt = JText::_('COM_VIRTUEMART_EMPTY_CART');
 if (false && $data->dataValidated == true) {
 	$taskRoute = '&task=confirm';
-	$linkName = JText::_('COM_VIRTUEMART_ORDER_CONFIRM_MNU');
+	$linkName = JText::_('COM_VIRTUEMART_CART_CONFIRM');
 } else {
 	$taskRoute = '';
 	$linkName = JText::_('COM_VIRTUEMART_CART_SHOW');
@@ -50,7 +50,7 @@ $useXHTML = true;
 $data->cart_show = '<a style ="float:right;" href="'.JRoute::_("index.php?option=com_virtuemart&view=cart".$taskRoute,$useXHTML,$useSSL).'">'.$linkName.'</a>';
 $data->billTotal = $lang->_('COM_VIRTUEMART_CART_TOTAL').' : <strong>'. $data->billTotal .'</strong>';
 
-//vmJsApi::jPrice();
+vmJsApi::jPrice();
 vmJsApi::cssSite();
 $document = JFactory::getDocument();
 //$document->addScriptDeclaration($jsVars);
@@ -58,5 +58,5 @@ $moduleclass_sfx = $params->get('moduleclass_sfx', '');
 $show_price = (bool)$params->get( 'show_price', 1 ); // Display the Product Price?
 $show_product_list = (bool)$params->get( 'show_product_list', 1 ); // Display the Product Price?
 /* Laod tmpl default */
-require(JModuleHelper::getLayoutPath('mod_virtuemart_cart'));
+require JModuleHelper::getLayoutPath('mod_virtuemart_cart', $params->get('layout', 'default') );
  ?>

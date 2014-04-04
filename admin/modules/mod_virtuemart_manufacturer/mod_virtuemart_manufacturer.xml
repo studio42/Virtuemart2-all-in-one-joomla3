@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/dtd/1.5/module-install.dtd">
 <extension type="module" version="2.5" method="upgrade"> 
     <name>mod_virtuemart_manufacturer</name>
     <creationDate>July 15 2013</creationDate>
     <author>The VirtueMart Development Team</author>
     <authorUrl>http://www.virtuemart.net</authorUrl>
-    <copyright>${PHING.VM.COPYRIGH}</copyright>
+    <copyright>Copyright (C) 2004-2012 Virtuemart Team. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-    <version>2.0.22a</version>
+    <version>2.0.20b</version>
     <description>MOD_VIRTUEMART_MANUFACTURER_DESC</description>
     <files>
         <filename module="mod_virtuemart_manufacturer">mod_virtuemart_manufacturer.php</filename>
@@ -16,46 +15,10 @@
         <filename>tmpl/default.php</filename>
         <filename>tmpl/index.html</filename>
     </files>
-    <params>
-        <param name="show" type="list" default="all"
-			label="MOD_VIRTUEMART_MANUFACTURER_SHOW"
-			description="MOD_VIRTUEMART_MANUFACTURER_SHOW_DESC">
-            <option value="all">MOD_VIRTUEMART_MANUFACTURER_IMAGE_NAME</option>
-            <option value="image">MOD_VIRTUEMART_MANUFACTURER_THUMB_IMAGE</option>
-            <option value="text">MOD_VIRTUEMART_MANUFACTURER_NAME</option>
-        </param>
-        <param name="display_style" type="list" default="list"
-			label="MOD_VIRTUEMART_MANUFACTURER_DISPLAY_STYLE"
-			description="MOD_VIRTUEMART_MANUFACTURER_DISPLAY_STYLE_DESC">
-            <option value="list">MOD_VIRTUEMART_MANUFACTURER_LIST</option>
-            <option value="div">MOD_VIRTUEMART_MANUFACTURER_DIV</option>
-        </param>
-        <param name="manufacturers_per_row" type="text" default=""
-			label="MOD_VIRTUEMART_MANUFACTURER_ROW"
-			description="MOD_VIRTUEMART_MANUFACTURER_ROW_DESC" />
-        <param name="@spacer" type="spacer" default="" label="" description="" />
-        <param name="headerText" type="textarea" cols="40" rows="3" default=""
-			label="MOD_VIRTUEMART_MANUFACTURER_HEADER_TEXT"
-			description="MOD_VIRTUEMART_MANUFACTURER_HEADER_TEXT_DESC" />
-        <param name="footerText" type="textarea" cols="40" rows="3" default=""
-			label="MOD_VIRTUEMART_MANUFACTURER_FOOTER_TEXT"
-			description="MOD_VIRTUEMART_MANUFACTURER_FOOTER_TEXT_DESC" />
-    </params>
-    <params group="advanced">
-        <param name="cache" type="radio" default="0"
-			label="Enable Cache"
-			description="Select whether to cache the content of this module">
-            <option value="0">No</option>
-            <option value="1">Yes</option>
-        </param>
-        <param name="moduleclass_sfx" type="text" default=""
-			label="Module Class Suffix"
-			description="A suffix to be applied to the css class of the module (table.moduletable), this allows individual module styling" />
-        <param name="class_sfx" type="text" default=""
-			label="Menu Class Suffix"
-			description="A suffix to be applied to the css class of the menu items" />
-    </params>
-
+    <languages folder="language">
+	<language tag="en-GB">en-GB/en-GB.mod_virtuemart_manufacturer.ini</language>
+	<language tag="en-GB">en-GB/en-GB.mod_virtuemart_manufacturer.sys.ini</language>
+    </languages>
 	<config>
 	<fields name="params">
 		<fieldset name="options" addfieldpath="/administrator/components/com_virtuemart/models/fields">
@@ -85,21 +48,25 @@
 			label="MOD_VIRTUEMART_MANUFACTURER_FOOTER_TEXT"
 			description="MOD_VIRTUEMART_MANUFACTURER_FOOTER_TEXT_DESC" />
             </fieldset>
-            <fieldset name="advanced">
-               <field name="cache" type="list"
-					default="1"
-					label="COM_MODULES_FIELD_CACHING_LABEL"
-					description="COM_MODULES_FIELD_CACHING_DESC">
-                   <option value="0">No</option>
-                   <option value="1">Yes</option>
-                </field>
-                <field name="moduleclass_sfx" type="text" default=""
-			label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+		<fieldset name="advanced">
+			<field name="class_sfx" type="text" default="" label="Menu Class Suffix" description="A suffix to be applied to the css class of the menu items" />
+			<field name="layout" type="modulelayout"
+				label="JFIELD_ALT_LAYOUT_LABEL" description="JFIELD_ALT_MODULE_LAYOUT_DESC" />
+
+			<field name="moduleclass_sfx" type="text"
+				label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
 				description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
-                <field name="class_sfx" type="text" default=""
-			label="Menu Class Suffix"
-			description="A suffix to be applied to the css class of the menu items" />
-            </fieldset>
+
+			<field name="owncache" type="list" default="1"
+				label="COM_MODULES_FIELD_CACHING_LABEL" description="COM_MODULES_FIELD_CACHING_DESC" >
+				<option value="1">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING
+				</option>
+			</field>
+
+			<field name="cache_time" type="text" default="900"
+				label="COM_MODULES_FIELD_CACHE_TIME_LABEL" description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
+		</fieldset>
         </fields>
     </config>
 </extension>

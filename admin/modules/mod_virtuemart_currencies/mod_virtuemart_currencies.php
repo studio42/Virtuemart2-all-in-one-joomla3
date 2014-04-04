@@ -24,13 +24,14 @@ defined('_JEXEC') or  die( 'Direct Access to '.basename(__FILE__).' is not allow
  * to show the prices to the user in a later stadium.
   */
 
-if (!class_exists( 'VmConfig' )) require(JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_virtuemart'.DS.'helpers'.DS.'config.php');
+if (!class_exists( 'VmConfig' )) require(JPATH_ADMINISTRATOR .'/components/com_virtuemart/helpers/config.php');
 
 VmConfig::loadConfig();
 VmConfig::loadJLang('mod_virtuemart_currencies', true);
 $mainframe = Jfactory::getApplication();
 $vendorId = JRequest::getInt('vendorid', 1);
 $text_before = $params->get( 'text_before', '');
+$layout = $params->get('layout','default');
 /* table vm_vendor */
 $db = JFactory::getDBO();
 // the select list should include the vendor currency which is the currency in which the product prices are displayed by default.
@@ -51,5 +52,5 @@ FROM `#__virtuemart_currencies` WHERE `virtuemart_currency_id` IN ('.$vendor_cur
 $db->setQuery($q);
 $currencies = $db->loadObjectList();
 /* load the template */
-require(JModuleHelper::getLayoutPath('mod_virtuemart_currencies'));
+require(JModuleHelper::getLayoutPath('mod_virtuemart_currencies',$layout));
     ?>

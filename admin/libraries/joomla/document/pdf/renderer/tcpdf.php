@@ -3,7 +3,7 @@
  * @package     Joomla.Platform
  * @subpackage  Document
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2013 - 2014 Studio42 France, All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -16,16 +16,10 @@ if(!file_exists(JPATH_LIBRARIES.'/tcpdf/tcpdf.php')){
 	if(!class_exists('TCPDF'))	require(JPATH_LIBRARIES.'/tcpdf/tcpdf.php');
 }
 /**
- * JDocumentRenderer_Atom is a feed that implements the atom specification
- *
- * Please note that just by using this class you won't automatically
- * produce valid atom files. For example, you have to specify either an editor
- * for the feed or an author for every single feed item.
- *
+ * JDocumentRendererTcpdf is a pdf that implements the tcpdf PHP class for generating PDF documents
  * @package     Joomla.Platform
  * @subpackage  Document
- * @see         http://www.atomenabled.org/developers/syndication/atom-format-spec.php
- * @since       11.1
+ * @see         http://www.tcpdf.org/
  */
 class JDocumentRendererTcpdf extends TCPDF
 {
@@ -63,7 +57,7 @@ class JDocumentRendererTcpdf extends TCPDF
 	}
 
 	/**
-	 * Render the feed.
+	 * Render the pdf.
 	 *
 	 * @param   string  $name     The name of the element to render
 	 * @param   array   $params   Array of values
@@ -77,7 +71,10 @@ class JDocumentRendererTcpdf extends TCPDF
 	public function render($name = '', $destination = 'I', $content = null)
 	{
 		$app = JFactory::getApplication();
-
+		$content = $this->fullPaths($content);
+		$full = juri::root(); 
+		$short = juri::root(true).'/';
+		// echo $content; jexit();
 	// parse variable from JDocument to header
 		if (isset($this->jdoc->header_logo)) {
 			$file = $this->jdoc->header_logo;
@@ -89,39 +86,61 @@ class JDocumentRendererTcpdf extends TCPDF
 				}
 			}
 		}
-		if (isset($this->jdoc->header_logo_width))  $this->header_logo_width =  (int)$this->jdoc->header_logo_width ;
+		if ($this->header_logo && isset($this->jdoc->header_logo_width))  $this->header_logo_width =  (int)$this->jdoc->header_logo_width ;
+		else $this->header_logo_width = 0 ;
 		if (isset($this->jdoc->header_title))  $this->header_title =  $this->jdoc->header_title ;
 		if (isset($this->jdoc->header_string))  $this->header_string =  $this->jdoc->header_string ;
 		if (isset($this->jdoc->header_text_color))  $this->header_text_color =  $this->jdoc->header_text_color ;
 		if (isset($this->jdoc->header_line_color))  $this->header_line_color =  $this->jdoc->header_line_color ;
-		if (empty($this->header_title)) $this->header_title = $this->jdoc->getTitle();
+		if (empty($this->header_title)) $this->header_title = $this->jdoc->title;
+		
+		// $this->setHeaderData();
+		// var_dump($this->getHeaderData()); jexit();
 		// add css
-		$header = '';
+		$this->cssStyles = '<style>';
 		foreach ($this->jdoc->_styleSheets as $src => $css) {
+			// relative to absolute path
+			$pos = strpos($src, $short);
+			if ($pos === 0) $src = str_replace($short, $full, $src);
+			// relative path with missing joomla root
+			$pos = strpos($src, '//');
+			if ($pos === false) $src = $full.$src;
+			$stylesheet = file_get_contents($src);
 			// if ($src[1] === "/" ) $src = str_replace($short, $full, $src);
-			
-			$header.'<link rel="stylesheet"  href="'.$src.'" type="'.$css['mime'].'">';
+			$this->cssStyles .= $stylesheet ;
 		}
+		$this->cssStyles .= '</style>';
 		// html debug output 
 		if (JRequest::getInt('print', null) == 2) return $content;
+		
 		// set header and footer fonts
 		$this->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
 		$this->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 		$this->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
 		$this->SetHeaderMargin(PDF_MARGIN_HEADER);
 		$this->SetFooterMargin(PDF_MARGIN_FOOTER);
+		// $this->SetFont(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN, '', 'false'); 
 		// set default monospaced font
-		$this->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+		// $this->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 		$this->AddPage();
-		$this->writeHTML($header.$content, true, false, true, false, '');
-		// $this->WriteHTML($content);
-		$this->Output($name, $destination ) ;
-		if ($destination ==="F") return $name;
-		else return $this->Output($name, $destination ) ;
+		// $this->writeHTML($header.$content, true, false, true, false, '');
+		$this->writeHTML($this->cssStyles.$content, true, false, true, false, '');
+
+		if ($destination ==="F") {
+			// $destination = "S";
+			$this->Output($name, $destination ) ;
+			// file_put_contents($name, $pdf); 
+			return $name;
+		} else return $this->Output($name, $destination ) ;
+
 	}
-	private function fullPaths($data)
+	// add full path to relative path
+	private function fullPaths($src)
 	{
-	
+		$full = juri::root(); 
+		$short = juri::root(true).'/';
+		$src = str_replace('"'.$short, '"'.$full, $src);
+		return str_replace("'".$short, "'".$full, $src);
 	}
 	/**
 	 * This method is used to render the page footer.
@@ -134,45 +153,32 @@ class JDocumentRendererTcpdf extends TCPDF
 		//set style for cell border
 		$line_width = (0.85 / $this->k);
 		$this->SetLineStyle(array('width' => $line_width, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => $this->footer_line_color));
-		//print document barcode
-		$barcode = $this->getBarcode();
-		if (!empty($barcode)) {
-			$this->Ln($line_width);
-			$barcode_width = round(($this->w - $this->original_lMargin - $this->original_rMargin) / 3);
-			$style = array(
-				'position' => $this->rtl?'R':'L',
-				'align' => $this->rtl?'R':'L',
-				'stretch' => false,
-				'fitwidth' => true,
-				'cellfitalign' => '',
-				'border' => false,
-				'padding' => 0,
-				'fgcolor' => array(0,0,0),
-				'bgcolor' => false,
-				'text' => false
-			);
-			$this->write1DBarcode($barcode, 'C128', '', $cur_y + $line_width, '', (($this->footer_margin / 3) - $line_width), 0.3, $style, '');
-		}
+		//print document barcode REMOVED !!!
 		$footer ='';
 		if (!empty($this->HTMLfooter)) {
 		//@page { margin: 180px 50px; }
-			$footer .= '<div id="HTMLfooter">'.$this->HTMLfooter.'</div>' ;
+			$footer .= '<div class="pdf-footer">'.$this->HTMLfooter.'</div>' ;
 		} else {
 			$siteUrl = JURI::getInstance()->toString();
-			$siteUrl = str_replace("format=pdf", "", $siteUrl);
+			$siteUrl = str_replace("&format=pdf", "", $siteUrl);
+			$siteUrl = str_replace("?format=pdf", "", $siteUrl);
 			$app = JFactory::getApplication();
 			$title = $app->getCfg('sitename').' - '.$this->title;
-			$footer .= '<div id="HTMLfooter"><p class="page"><a href="'.$siteUrl.'">'.$title.'</p></div>' ;
+			$footer .= '<div class="pdf-footer"><a href="'.$siteUrl.'">'.$title.'</a></div>' ;
 		
 		}
 		$w_page = isset($this->l['w_page']) ? $this->l['w_page'].' ' : '';
 		if (empty($this->pagegroups)) {
-			$pagenumtxt = $w_page.$this->getAliasNumPage().' / '.$this->getAliasNbPages();
+			$pagenumtxt = JText::sprintf('JLIB_HTML_PAGE_CURRENT_OF_TOTAL',$this->getAliasNumPage(),$this->getAliasNbPages());
+			// $pagenumtxt = $w_page.$this->getAliasNumPage().' / '.$this->getAliasNbPages();
 		} else {
-			$pagenumtxt = $w_page.$this->getPageNumGroupAlias().' / '.$this->getPageGroupAlias();
+			$pagenumtxt = JText::sprintf('JLIB_HTML_PAGE_CURRENT_OF_TOTAL',$this->getPageNumGroupAlias(),$this->getPageGroupAlias());
+			// $pagenumtxt = $w_page.$this->getPageNumGroupAlias().' / '.$this->getPageGroupAlias();
 		}
+		// echo $footer; jexit();
 		$this->SetY($cur_y-$this->jdoc->_margin_footer);
-		$this->writeHTMLCell($w=0, $h=0, $x='', $y='', $footer, $border=0, $ln=1, $fill=0, $reseth=true, $align='', $autopadding=true);
+		// $this->writeHTML($this->cssStyles.$content, true, false, true, false, '');
+		$this->writeHTMLCell($w=0, $h=0, $x='', $y='', $this->cssStyles.$footer, $border=0, $ln=1, $fill=0, $reseth=true, $align='', $autopadding=true);
 		//Print page number
 		$this->SetY($cur_y);
 		if ($this->getRTL()) {
@@ -182,5 +188,22 @@ class JDocumentRendererTcpdf extends TCPDF
 			$this->SetX($this->original_lMargin);
 			$this->Cell(0, 0, $this->getAliasRightShift().$pagenumtxt, 'T', 0, 'R');
 		}
-	} 
+	}
+	/**
+	 * This method is used to render the page header.
+	 * It is automatically called by AddPage() and could be overwritten in your own inherited class.
+	 * @public
+	 */
+	public function Header() {
+		if (!empty($this->HTMLHeader)) {
+			$logo_height = $this->jdoc->params->get('logo_height',48);
+			// if (empty($this->jdoc->_styleSheets)) {
+
+			// }
+			$header = '<div class="pdf-header">'.$this->HTMLHeader.'</div>' ;
+			$this->writeHTMLCell($w=0, $h=0, $x='', $y='', $this->cssStyles.$header, $border=0, $ln=1, $fill=0, $reseth=true, $align='', $autopadding=true);
+		} else {
+			parent::Header();
+		}
+	}
 }

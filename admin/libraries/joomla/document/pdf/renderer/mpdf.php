@@ -3,7 +3,7 @@
  * @package     Joomla.Platform
  * @subpackage  Document
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2013 - 2014 Studio42 France, All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -16,15 +16,11 @@ if(!file_exists(JPATH_LIBRARIES.'/mpdf/mpdf.php')){
 	if(!class_exists('mPDF'))	require_once(JPATH_LIBRARIES.'/mpdf/mpdf.php');
 }
 /**
- * JDocumentRenderer_Atom is a feed that implements the atom specification
- *
- * Please note that just by using this class you won't automatically
- * produce valid atom files. For example, you have to specify either an editor
- * for the feed or an author for every single feed item.
+ * JDocumentRendererMpdf is a pdf renderer that implements the mpdf PHP class for generating PDF documents
  *
  * @package     Joomla.Platform
  * @subpackage  Document
- * @see         http://www.atomenabled.org/developers/syndication/atom-format-spec.php
+ * @see         http://www.tcpdf.org/
  * @since       11.1
  */
 class JDocumentRendererMpdf extends mPDF
@@ -58,22 +54,8 @@ class JDocumentRendererMpdf extends mPDF
 		// PDFA true include more datas but render same in all computers. For a web site this can be very longer setted to true.
 		// $encoding always utf8
 		// $diskcache=false; // true : compatible with joomla ?
-		parent::__construct('',$format,0,'',$doc->_margin_left,$doc->_margin_right,$doc->_margin_top,$doc->_margin_bottom,$doc->_margin_header,$doc->_margin_footer,$orientation);
-		// set default header/footer
+		parent::__construct('c',$format,'','',$doc->_margin_left,$doc->_margin_right,$doc->_margin_top,$doc->_margin_bottom,$doc->_margin_header,$doc->_margin_footer,$orientation);
 		$app = JFactory::getApplication();
-		// if ($app->getCfg('sitename_pagetitles', 0) == 1)
-		// {
-			$title = $app->getCfg('sitename');
-		// }
-		// elseif ($app->getCfg('sitename_pagetitles', 0) == 2)
-		// {
-			// $title = JText::sprintf('JPAGETITLE', $doc->title, $app->getCfg('sitename'));
-		// }
-		// else
-		// {
-			// $title = $doc->title;
-		// }
-
 
 	}  
 
@@ -100,7 +82,7 @@ class JDocumentRendererMpdf extends mPDF
 	} */
 
 	/**
-	 * Render the feed.
+	 * Render the pdf.
 	 *
 	 * @param   string  $name     The file name of the pdf to render
 	 * @param   array   $params   Array of values
@@ -117,24 +99,42 @@ class JDocumentRendererMpdf extends mPDF
 		// html debug output 
 		if (JRequest::getInt('print', null) == 2) return $content;
 
+		$content = str_replace('<hr class="page-break">', '', $content);
+		$full = '"'.juri::root(); 
+		$short = '"'.juri::root(true).'/';
+		foreach ($this->jdoc->_styleSheets as $src => $css) {
+			if ($src[1] === "/" ) $src = str_replace($short, $full, $src);
+			$stylesheet = file_get_contents($src);
+			$this->WriteHTML($stylesheet,1);	// The parameter 1 tells that this is css/style only and no body/html/text
+		}
 		$footer ='';
+		if (empty($this->HTMLHeader['html'])) {
+			if (!empty($this->jdoc->header_title))  $title =  $this->jdoc->header_title ;
+			else  $title =  $this->jdoc->title ;
+			$this->SetHTMLHeader('<div class="pdf-header"><span class="right"><h3>'.$title.'</h3></span></div>');
+		}
 		if (!empty($this->HTMLfooter)) {
 		//@page { margin: 180px 50px; }
 			$htmlFooter .= $this->HTMLfooter ;
+			
 		} else {
 			$siteUrl = JURI::getInstance()->toString();
-			$siteUrl = str_replace("format=pdf", "", $siteUrl);
+			$siteUrl = str_replace("&format=pdf", "", $siteUrl);
+			$siteUrl = str_replace("?format=pdf", "", $siteUrl);
 			$app = JFactory::getApplication();
 			$title = $app->getCfg('sitename').' - '.$this->title;
-			$htmlFooter .= '<p class="page"><a href="'.$siteUrl.'">'.$title.'<a></p>' ;
+			$htmlFooter .= '<p class="page"><a href="'.$siteUrl.'">'.$title.'</a></p>' ;
 			//.'<div>'{PAGENO}/{nb}.'</div>'
-		
+		// jexit($htmlFooter);
 		}
 		$footer .= '<table width="100%" style="background:none"><tr><td width="66%">';
 		$footer .= $htmlFooter ;
-		$footer .= '</td><td width="33%" style="text-align: right;">{PAGENO}/{nb}</td></tr></table>';
+		$PAGE_CURRENT_OF_TOTAL = JText::sprintf('JLIB_HTML_PAGE_CURRENT_OF_TOTAL', '{PAGENO}','{nbpg}');
+		$footer .= '</td><td width="33%" style="text-align: right;">'.$PAGE_CURRENT_OF_TOTAL.'</td></tr></table>';
 
-		$this->SetHTMLFooter( $footer);
+		$this->setHTMLFooter( $footer );
+		$content = '<div class="pdf-body">'.$content .'</div>';
+		// echo '<div class="pdf-body">'.$content.'</div >'; jexit();
 		$this->WriteHTML($content);
 		if ($destination === "F") {
 			$this->Output($name, $destination ) ;

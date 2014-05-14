@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<extension version="2.5" type="plugin" group="vmcustom" >
+<extension version="2.5" type="plugin" group="vmcustom" method="upgrade">
     <name>VMCustom - specification</name>
-    <creationDate>January 09 2013</creationDate>
+    <creationDate>March 17 2013</creationDate>
     <author>The VirtueMart Development Team</author>
     <authorUrl>http://www.virtuemart.net</authorUrl>
     <copyright>Copyright (C) 2004-2012 Virtuemart Team. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-    <version>2.0.18a</version>
+    <version>2.0.20b</version>
     <description>text input plugin for product</description>
     <languages>
         <language tag="en-GB">en-GB.plg_vmcustom_specification.ini</language>
@@ -18,7 +18,7 @@
 	<config>
 	<fields name="params">
 		<fieldset name="options" addfieldpath="/administrator/components/com_virtuemart/models/fields">
-			<field type="vmjpluginwarning" />
+        <field type="vmjpluginwarning" name="vmjpluginwarning"/>
 			<field name="custom_specification_name1" type="text" size="64"  default="" label="VMCUSTOM_SPECIFICATION_NAME_INFO" description="" />
 			<field name="custom_specification_default1" type="text"  size="64"  default="" label="VMCUSTOM_SPECIFICATION_DEFAULT_INFO" description="VMCUSTOM_SPECIFICATION_DEFAULT_INFO_DESC" />
 			<field name="custom_specification_name2" type="text" size="64"  default="" label="VMCUSTOM_SPECIFICATION_NAME_INFO" description="VMCUSTOM_SPECIFICATION_NAME_INFO_DESC" />

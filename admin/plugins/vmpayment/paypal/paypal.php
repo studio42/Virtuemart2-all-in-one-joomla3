@@ -271,7 +271,7 @@ class plgVmPaymentPaypal extends vmPSPlugin {
 		foreach ($post_variables as $name => $value) {
 			$html .= '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value) . '" />';
 		}
-		$html .= '</form>';
+		$html .= '</form></div>';
 		$html .= ' <script type="text/javascript">';
 		$html .= ' document.vm_paypal_form.submit();';
 		$html .= ' </script></body></html>';

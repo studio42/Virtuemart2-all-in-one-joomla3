@@ -56,13 +56,17 @@ class JDocumentRendererWkhtmltopdf extends wkhtmltopdf
 		$unicode	 = isset($doc->unicode) 	? $doc->unicode		: true;
 		$pdfa		 = isset($doc->pdfa) 		? $doc->pdfa		: false;
 		// $doc->params->->get('logo_height',48);
+		// Note :binPath is for last release of wkhtmltopdf
+		if (property_exists($this,'binPath')) $bin = 'binPath';
+		else $bin = 'bin';
 		$options = array(
 			'no-outline',         // Make Chrome not complain
 			'margin-top'    => 0,
 			'margin-right'  => 0,
 			'margin-bottom' => 0,
 			'margin-left'   => 0,
-			'bin' => $doc->params->get('wkhtmltopdf_path','/usr/bin/wkhtmltopdf')
+			// 'bin' => $doc->params->get('wkhtmltopdf_path','/usr/bin/wkhtmltopdf'),
+			$bin => $doc->params->get('wkhtmltopdf_path','/usr/bin/wkhtmltopdf')
 		);
 		// PDFA true include more datas but render same in all computers. For a web site this can be very longer setted to true.
 		// $encoding always utf8
@@ -110,16 +114,19 @@ class JDocumentRendererWkhtmltopdf extends wkhtmltopdf
 			'disable-smart-shrinking'
 		) );
 		$content = $this->fullPaths($content);
-		// echo $content; jexit();
+
 		if (JRequest::getInt('print', null) == 2) return $content;
 		$this->addPage($content);
+		// var_dump($this->jdoc->_styleSheets);
 		// Save the PDF
+		if ($destination === 'I') $name = "";
 		if ($destination === "F") {
 			if(!$send = $this->saveAs($name))
 				throw new Exception('Could not save PDF: '.$this->getError());
-		} elseif(!$send =$this->send())
+			return $name ;
+		} elseif(!$send =$this->send($name))
 			throw new Exception('Could not create PDF: '.$this->getError());
-		return $send ;
+		JFactory::getApplication()->close();
 	}
 	private function fullPaths($data)
 	{
@@ -128,29 +135,34 @@ class JDocumentRendererWkhtmltopdf extends wkhtmltopdf
 		if (!strpos($data, 'html>')) {
 			$full = juri::root(); 
 			$short = juri::root(true).'/';
-		
+			if (!empty($this->jdoc->header_title))  $title =  $this->jdoc->header_title ;
+			else  $title =  $this->jdoc->title ;
 			$langTag = JFactory::getLanguage()->getTag();
 			// missing header create it
 			$header = '
 			<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="'. $langTag .'" lang="'. $langTag .'" dir="'.$this->directionality .'">
 			<head>
 				<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-				<title>'.$this->Title.'</title>
-				<meta name="title" content="'.$this->Title.'" />
+				<title>'.$title.'</title>
+				<meta name="title" content="'.$title.'" />
 				<meta name="generator" content="'.$this->Creator.'" />
 				<meta name="description" content="'.$this->Subject.'" />
 				<meta name="keywords" content="'.$this->Keywords.'" />';
 			// add scripts
-			foreach ($this->jdoc->_scripts as $src => $script) {
-				if ($src[1] === "/" ) $src = str_replace($short, $full, $src);
-				$header.'<script src="'.$src.'" type="'.$script['mime'].'"></script>';
+			// foreach ($this->jdoc->_scripts as $src => $script) {
+				// if ($src[1] === "/" ) $src = str_replace($short, $full, $src);
+				// $header.='<script src="'.$src.'" type="'.$script['mime'].'"></script>';
 				
-			}
+			// }
 			// add css
 			foreach ($this->jdoc->_styleSheets as $src => $css) {
-				if ($src[1] === "/" ) $src = str_replace($short, $full, $src);
-				
-				$header.'<link rel="stylesheet"  href="'.$src.'" type="'.$css['mime'].'">';
+				// relative to absolute path
+				$pos = strpos($src, $short);
+				if ($pos === 0) $src = str_replace($short, $full, $src);
+				// relative path with missing joomla root
+				$pos = strpos($src, '//');
+				if ($pos === false) $src = $full.$src;
+				$header.='<link rel="stylesheet"  href="'.$src.'" type="'.$css['mime'].'">';
 			}
 			$header .= '</head>';
 			$footer = '</html>';
@@ -161,17 +173,17 @@ class JDocumentRendererWkhtmltopdf extends wkhtmltopdf
 				$footer = '</body>'.$footer;
 			}
 		}
-		// var_dump($this);jexit();
+
 		if (!empty($this->HTMLHeader)) {
-			$logo_height = $this->jdoc->params->get('logo_height',48);
-			$header .='
-		  <style>
-			#HTMLHeader { position: fixed; padding-left:'.$this->jdoc->_margin_left.'mm; padding-right:'.$this->jdoc->_margin_right.'mm; padding-top:'.$this->jdoc->_margin_header.'mm; left: 0px; top: 0px; right: 0px; height: 30px; text-align: right;}
-			#HTMLHeader h1{margin:0px}
-			#HTMLHeader img{ position: fixed; padding-left:'.$this->jdoc->_margin_left.'mm; padding-right:'.$this->jdoc->_margin_right.'mm; padding-top:'.$this->jdoc->_margin_header.'mm; left: 0px; top: 0px; right: 0px; height: '.$logo_height.'px;}
-		  </style>
-		  ';
-			$header .= '<div id="HTMLHeader">'.$this->HTMLHeader.'</div>' ;
+			// $logo_height = $this->jdoc->params->get('logo_height',48);
+			// $header .='
+		  // <style>
+			// #HTMLHeader { position: fixed; padding-left:'.$this->jdoc->_margin_left.'mm; padding-right:'.$this->jdoc->_margin_right.'mm; padding-top:'.$this->jdoc->_margin_header.'mm; left: 0px; top: 0px; right: 0px; height: 30px; text-align: right;}
+			// #HTMLHeader h1{margin:0px}
+			// #HTMLHeader img{ position: fixed; padding-left:'.$this->jdoc->_margin_left.'mm; padding-right:'.$this->jdoc->_margin_right.'mm; padding-top:'.$this->jdoc->_margin_header.'mm; left: 0px; top: 0px; right: 0px; height: '.$logo_height.'px;}
+		  // </style>
+		  // ';
+			// $header .= '<div id="HTMLHeader">'.$this->HTMLHeader.'</div>' ;
 		}
 		
 		if (!empty($this->HTMLfooter)) {
@@ -182,15 +194,29 @@ class JDocumentRendererWkhtmltopdf extends wkhtmltopdf
 			$siteUrl = str_replace("format=pdf", "", $siteUrl);
 			$app = JFactory::getApplication();
 			$title = $app->getCfg('sitename').' - '.$this->Title;
-			
-			$date =& JFactory::getDate();
-			$jDate = JHTML::_('date',$date,JText::_('DATE_FORMAT_LC3'));
-			$header .='
-			  <style>
-				#HTMLfooter,#HTMLDate { position: fixed; padding-left:'.$this->jdoc->_margin_left.'mm; padding-right:'.$this->jdoc->_margin_right.'mm; padding-top:'.$this->jdoc->_margin_footer.'mm;  bottom: -10px; height: 40px; text-align: left;}
-			  </style>
-			  ';
-			$header .= '<div id="HTMLfooter" style="left:'.$this->jdoc->_margin_left.'mm"><p class="wkhtmltopdf" ><a href="'.$siteUrl.'">'.$title.'</a></p></div><div id="HTMLDate" style="right:'.$this->jdoc->_margin_right.'mm">'.$jDate.'</div>' ;
+			$path = dirname(__FILE__).DIRECTORY_SEPARATOR;
+			if(file_exists($path.'header.html')) $this->setOptions(array('header-html' => $path.'header.html') );
+
+			// $date =& JFactory::getDate();
+			// $jDate = JHTML::_('date',$date,JText::_('DATE_FORMAT_LC3'));
+			// $header .='
+			  // <style>
+				// .pdf-footer,#HTMLPages { position: fixed; padding-left:'.$this->jdoc->_margin_left.'mm; padding-right:'.$this->jdoc->_margin_right.'mm; padding-top:'.$this->jdoc->_margin_footer.'mm;  bottom: -10px; height: 40px; text-align: left;}
+			  // </style>
+			  // ';
+			// $header .= '<div class="pdf-footer" style="left:'.$this->jdoc->_margin_left.'mm"><a href="'.$siteUrl.'">'.$title.'</a>
+				// <div id="HTMLPages" style="right:'.$this->jdoc->_margin_right.'mm">Page <span id="page_current">page</span> of <span id="page_count">toPage]</span></div></div>
+				// <script>
+					// var pdfInfo = {};
+				  // var x = document.location.search.substring(1).split("&");
+				  // for (var i in x) { var z = x[i].split("=",2); pdfInfo[z[0]] = unescape(z[1]); }
+				  // function getPdfInfo() {
+					// var page = pdfInfo.page || 1;
+					// var pageCount = pdfInfo.topage || 1;
+					// document.getElementById("page_current").textContent = page;
+					// document.getElementById("page_count").textContent = pageCount;
+				  // }
+				// </script> ';
 		
 		}
 		// $options= array();

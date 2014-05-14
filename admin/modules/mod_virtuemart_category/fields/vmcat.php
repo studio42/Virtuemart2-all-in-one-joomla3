@@ -17,7 +17,7 @@ if (!class_exists('ShopFunctions'))
     require(JPATH_VM_ADMINISTRATOR .'/helpers/shopfunctions.php');
 if (!class_exists('TableCategories'))
     require(JPATH_VM_ADMINISTRATOR .'/tables/categories.php');
-
+JFormHelper::loadFieldClass('list');
 /**
  * Form Field class for the Joomla Platform.
  * a list of virtuemart categories.

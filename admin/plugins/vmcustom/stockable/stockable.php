@@ -128,7 +128,7 @@ class plgVmCustomStockable extends vmCustomPlugin {
 		$('#new_stockable_product').click(function() {
 			var Prod = $('#new_stockable');// input[name^=\"stockable\"]').serialize();
 
-			$.getJSON('index.php?option=com_virtuemart&view=product&task=saveJS&token=".JUtility::getToken()."' ,
+			$.getJSON('index.php?option=com_virtuemart&view=product&task=saveJS&token=".JSession::getFormToken()."' ,
 				{
 					product_sku: Prod.find('input[name*=\"product_sku\"]').val(),
 					product_name: Prod.find('input[name*=\"product_name\"]').val(),

@@ -98,7 +98,7 @@ class plgVmCustomSpecification extends vmCustomPlugin {
 		if ($keyword = vmRequest::uword('custom_specification_name1', null, ' ')) {
 			$db = JFactory::getDBO();
 			if ($this->_name != $this->GetNameByCustomId($custom_id)) return;
-			$keyword = '"%' . $db->getEscaped( $keyword, true ) . '%"' ;
+			$keyword = '"%' . $db->escape( $keyword, true ) . '%"' ;
 			$where[] = $this->_name .'.`custom_specification_default1` LIKE '.$keyword;
 			$PluginJoinTables[] = $this->_name ;
 		}
@@ -111,16 +111,16 @@ class plgVmCustomSpecification extends vmCustomPlugin {
 		// $this->tableFields = array ( 'id', 'virtuemart_custom_id', 'custom_specification_default1', 'custom_specification_default2' );
 		$this->getCustomParams($field);
 		$this->getPluginCustomData($field, $product_id);
-
+		$spec = json_decode($field->custom_params);
 		// 		$data = $this->getVmPluginMethod($field->virtuemart_custom_id);
 		// 		VmTable::bindParameterable($field,$this->_xParams,$this->_varsToPushParam);
 		// 		$html  ='<input type="text" value="'.$field->custom_title.'" size="10" name="custom_param['.$row.'][custom_title]"> ';
 		$html ='<div>';
-		$html .='<div>'.$this->params->custom_specification_name1.'</div>';
-		$html .='<input type="text" value="'.$this->params->custom_specification_default1.'" size="10" name="plugin_param['.$row.']['.$this->_name.'][custom_specification_default1]">';
-		$html .='<div>'.$this->params->custom_specification_name2.'</div>';
-		$html .='<input type="text" value="'.$this->params->custom_specification_default2.'" size="10" name="plugin_param['.$row.']['.$this->_name.'][custom_specification_default2]">';
-		$html .='<input type="hidden" value="'.$this->virtuemart_custom_id.'" name="plugin_param['.$row.']['.$this->_name.'][virtuemart_custom_id]">';
+		$html .='<div>'.$spec->custom_specification_name1.'</div>';
+		$html .='<input type="text" value="'.$this->_vmpItable->custom_specification_default1.'" size="10" name="plugin_param['.$row.']['.$this->_name.'][custom_specification_default1]">';
+		$html .='<div>'.$spec->custom_specification_name2.'</div>';
+		$html .='<input type="text" value="'.$this->_vmpItable->custom_specification_default2.'" size="10" name="plugin_param['.$row.']['.$this->_name.'][custom_specification_default2]">';
+		$html .='<input type="hidden" value="'.$field->virtuemart_custom_id.'" name="plugin_param['.$row.']['.$this->_name.'][virtuemart_custom_id]">';
 		$html .='</div>';
 		// 		$field->display =
 		$retValue .= $html  ;
@@ -164,6 +164,10 @@ class plgVmCustomSpecification extends vmCustomPlugin {
 	}
 
 	function plgVmSetOnTablePluginParamsCustom($name, $id, &$table){
+		$this->_varsToPushParam = array(
+			'custom_specification_default1'=> array('', 'string'),
+			'custom_specification_default2'=> array('', 'string'),
+		);
 		return $this->setOnTablePluginParams($name, $id, $table);
 	}
 

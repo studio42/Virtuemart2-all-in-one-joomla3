@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<extension version="2.5" type="plugin" group="vmpayment">
+<extension version="2.5" type="plugin" group="vmpayment" method="upgrade">
     <name>VMPAYMENT_STANDARD</name>
     <creationDate>July 15 2013</creationDate>
     <author>The VirtueMart Development Team</author>
@@ -15,16 +15,16 @@
         <filename plugin="standard">standard.php</filename>
     </files>
 	<config>
-	<fields name="fields">
+	<fields name="params">
 		<fieldset name="options" addfieldpath="/administrator/components/com_virtuemart/models/fields">
-        <field type="vmjpluginwarning"/>
+        <field type="vmjpluginwarning" name="vmjpluginwarning"/>
         <field name="payment_logos" type="vmfiles" label="VMPAYMENT_STANDARD_LOGOS"
                description="VMPAYMENT_STANDARD_LOGOS_DESC"
                directory="/images/stories/virtuemart/payment"
                default="default" hide_default="1" hide_none="1"
-               stripext="0" exclude="^_"/>
-        <field name="countries" type="vmcountries" scope="com_virtuemart" default="" label="VMPAYMENT_STANDARD_COUNTRIES" description="VMPAYMENT_STANDARD_COUNTRIES_DESC"/>
-        <field name="payment_currency" type="vmacceptedcurrency" default="" label="VMPAYMENT_STANDARD_CURRENCY" description="VMPAYMENT_STANDARD_CURRENCY_DESC"/>
+				stripext="0"   exclude="^_" />
+			<field name="countries" type="vmcountries"  scope="com_virtuemart" default="" multiple="multiple" label="VMPAYMENT_STANDARD_COUNTRIES" description="VMPAYMENT_STANDARD_COUNTRIES_DESC"/>
+			<field name="payment_currency" type="vmacceptedcurrency" multiple="multiple" default="" label="VMPAYMENT_STANDARD_CURRENCY" description="VMPAYMENT_STANDARD_CURRENCY_DESC" />
         <field name="status_pending" type="vmorderstate" scope="com_virtuemart" default="U" label="VMPAYMENT_STANDARD_STATUS_PENDING" description="VMPAYMENT_STANDARD_STATUS_PENDING_EXPLAIN"/>
         <field name="send_invoice_on_order_null" type="radio" scope="com_virtuemart" default="1" label="VMPAYMENT_STANDARD_SEND_INVOICE_ON_ORDER_NULL" description="VMPAYMENT_STANDARD_SEND_INVOICE_ON_ORDER_NULL_EXPLAIN">
             <option value="0">COM_VIRTUEMART_NO</option>

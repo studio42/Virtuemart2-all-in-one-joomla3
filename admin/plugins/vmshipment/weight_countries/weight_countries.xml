@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<extension version="2.5" type="plugin" group="vmshipment" >
+<extension version="2.5" type="plugin" group="vmshipment" method="upgrade" >
     <name>VMSHIPMENT_WEIGHT_COUNTRIES</name>
     <creationDate>July 15 2013</creationDate>
     <author>The VirtueMart Development Team</author>
@@ -18,8 +18,8 @@
 	<config>
 	<fields name="params">
 		<fieldset name="options" addfieldpath="/administrator/components/com_virtuemart/models/fields">
-			<field type="vmjpluginwarning" />
-			<field type="spacer" default="VMSHIPMENT_WEIGHT_COUNTRIES_PLUGIN" level="level1" />
+		<field type="vmjpluginwarning" name="warning"/>
+			<field type="spacer" name="spacer" label="VMSHIPMENT_WEIGHT_COUNTRIES_PLUGIN" level="level1" />
 			<field	name="shipment_logos" type="vmfiles" label="VMSHIPMENT_WEIGHT_COUNTRIES_LOGOS"
 						description="VMSHIPMENT_WEIGHT_COUNTRIES_LOGOS_DESC"
 						directory="/images/stories/virtuemart/shipment"

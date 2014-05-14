@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="2.5" type="plugin" group="document">
+<extension version="2.5" type="plugin" group="document" method="upgrade">
 	<name>plg_document_pdf</name>
 	<author>Studio 42/P. Kohl</author>
 	<creationDate>April 2013</creationDate>
@@ -13,6 +13,7 @@
 		<filename plugin="pdf">pdf.php</filename>
 		<filename>index.html</filename>
 		<folder>fields</folder>
+		<filename>index.html</filename>
 	</files>
 	<languages>
 		<language tag="en-GB">en-GB.plg_document_pdf.ini</language>
@@ -29,15 +30,20 @@
 				label="PLG_PDF_LOGO_LABEL" description="PLG_PDF_LOGO_DESC" />
 			<field name="logo_height" type="text" default="48"
 				label="PLG_PDF_LOGO_HEIGHT_LABEL" description="PLG_PDF_LOGO_HEIGHT_DESC" />
-			<field name="header_title" type="text" default=""
+			<field name="header_title" type="spacer"
 				label="PLG_PDF_HEADER_TITLE_LABEL" description="PLG_PDF_HEADER_TITLE_DESC" />
+			<field name="header_left" type="text" label="JGLOBAL_LEFT"/>
+			<field name="header_center" type="text" label="JGLOBAL_CENTER"/>
+			<field name="header_right" type="text" label="JGLOBAL_RIGHT"/>
+
 			<field name="margin_header" type="text" default="5"
 				label="PLG_PDF_MARGIN_HEADER_LABEL" description="PLG_PDF_MARGIN_HEADER_DESC" />
 
 			<field name="footerspacer" type="spacer" label="PLG_PDF_FOOTER_LABEL" />
+			<field name="footer_left" type="text" label="JGLOBAL_LEFT"/>
+			<field name="footer_center" type="text" label="JGLOBAL_CENTER"/>
+			<field name="footer_right" type="text" label="JGLOBAL_RIGHT"/>
 
-			<field name="footer_text" type="text" default=""
-				label="PLG_PDF_FOOTER_TEXT_LABEL" description="PLG_PDF_FOOTER_TEXT_DESC" />
 			<field	name="show_link" type="radio" default="1"
 				description="PLG_PDF_FOOTER_LINK_DESC"
 				label="PLG_PDF_FOOTER_LINK_LABEL"

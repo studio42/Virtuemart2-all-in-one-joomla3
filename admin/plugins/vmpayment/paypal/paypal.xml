@@ -55,13 +55,13 @@
 		</fieldset>
 		<fieldset name="restrictions" label="VMPAYMENT_PAYPAL_RESTRICTIONS">
 			 <!-- BY DEFAULT paypal currency= vendor currency -->
-			<field name="payment_currency" type="vmacceptedcurrency" default="" label="VMPAYMENT_PAYPAL_CURRENCY" description="VMPAYMENT_PAYPAL_CURRENCY_DESC" />
+			<field name="payment_currency" type="vmacceptedcurrency" multiple="multiple" default="" label="VMPAYMENT_PAYPAL_CURRENCY" description="VMPAYMENT_PAYPAL_CURRENCY_DESC" />
 			<field name="email_currency" type="list" default="vendor" label="VMPAYMENT_PAYPAL_EMAIL_CURRENCY" description="VMPAYMENT_PAYPAL_EMAIL_CURRENCY_DESC"  >
 				<option value="vendor">VMPAYMENT_PAYPAL_EMAIL_CURRENCY_VENDOR</option>
-				<option value="apyment">VMPAYMENT_PAYPAL_EMAIL_CURRENCY_PAYMENT</option>
+				<option value="payment">VMPAYMENT_PAYPAL_EMAIL_CURRENCY_PAYMENT</option>
 			</field>
 
-			<field name="countries" type="vmcountries"  scope="com_virtuemart" default="" label="VMPAYMENT_PAYPAL_COUNTRIES" description="VMPAYMENT_PAYPAL_COUNTRIES_DESC"/>
+			<field name="countries" type="vmcountries"  scope="com_virtuemart" multiple="multiple" default="" label="VMPAYMENT_PAYPAL_COUNTRIES" description="VMPAYMENT_PAYPAL_COUNTRIES_DESC"/>
 			<field name="min_amount" type="text"  label="VMPAYMENT_PAYPAL_MIN_AMOUNT" description="VMPAYMENT_PAYPAL_MIN_AMOUNT_EXPLAIN" />
 			<field name="max_amount" type="text"  label="VMPAYMENT_PAYPAL_MAX_AMOUNT" description="VMPAYMENT_PAYPAL_MAX_AMOUNT_EXPLAIN" />
 			<field name="cost_per_transaction" type="text"  label="VMPAYMENT_PAYPAL_COST_PER_TRANSACTION" description="VMPAYMENT_PAYPAL_COST_PER_TRANSACTION_EXPLAIN" />
@@ -73,7 +73,7 @@
 			<field name="status_pending" type="vmorderstate" scope="com_virtuemart" default="U" label="VMPAYMENT_PAYPAL_STATUS_PENDING" description="VMPAYMENT_PAYPAL_STATUS_PENDING_EXPLAIN" />
 			<field name="status_success" type="vmorderstate" scope="com_virtuemart" default="C" label="VMPAYMENT_PAYPAL_STATUS_SUCCESS" description="VMPAYMENT_PAYPAL_STATUS_SUCCESS_EXPLAIN" />
 			<field name="status_canceled" type="vmorderstate" scope="com_virtuemart" default="X" label="VMPAYMENT_PAYPAL_STATUS_FAILED" description="VMPAYMENT_PAYPAL_STATUS_FAILED_EXPLAIN" />
-			<field type="spacer" default="" level="level1" />
+			<field type="spacer" name="spacer_debug" default="" level="level1" />
 				<!--param name="log_ipn" type="list" default="0" label="VMPAYMENT_PAYPAL_LOG_IPN" description="VMPAYMENT_PAYPAL_LOG_IPN_DESC" >
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>

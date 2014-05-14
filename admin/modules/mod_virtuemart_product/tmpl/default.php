@@ -1,9 +1,7 @@
 <?php // no direct access
 defined ('_JEXEC') or die('Restricted access');
-// add javascript for price and cart, need even for quantity buttons, so we need it almost anywhere
-vmJsApi::jPrice();
 
-
+if ($show_addtocart) vmJsApi::jPrice();
 $col = 1;
 $pwidth = ' width' . floor (100 / $products_per_row);
 if ($products_per_row > 1) {

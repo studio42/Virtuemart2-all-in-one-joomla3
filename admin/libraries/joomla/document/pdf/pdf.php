@@ -300,6 +300,7 @@ class JDocumentPDF extends JDocument
 		// most pdf use same function.
 		// if function not exist add it to the renderer engine file to set yourself the basic functions if needed.
 		$this->Set('Creator',$this->getGenerator());
+		$this->Set('Author',$this->getGenerator());
 		$this->Set('Title',$this->getTitle());
 		$this->Set('Subject',$this->getDescription());
 		$this->Set('Keywords',$this->getMetaData('keywords'));
@@ -309,6 +310,7 @@ class JDocumentPDF extends JDocument
 		// $this->rendertime = microtime(true); // Gets microseconds
 		// $this->_destination = "F";
 		$data = $pdf->render($this->getPath(),$this->_destination,$this->getBuffer() );
+
 		// test mode to get real html
 		// echo filesize($this->getPath()) . ' bytes</br>';
 		// echo "Time Elapsed: ".(microtime(true) - $this->rendertime)."s Engine : ".$this->engineName." ";
@@ -321,8 +323,9 @@ class JDocumentPDF extends JDocument
 
 		//JResponse::setHeader('Content-Length', strlen($data), true);
 		JResponse::setHeader('Content-type', 'application/pdf', true);
-		JResponse::setHeader('Content-disposition', 'inline; filename="'.$this->getName().'.pdf"', true);
-
+		if($this->_destination ==='D')
+			JResponse::setHeader('Content-disposition', 'attachment; filename="'.$this->getName().'.pdf"', true);
+		else JResponse::setHeader('Content-disposition', 'inline; filename="'.$this->getName().'.pdf"', true);
 		//Close and output PDF document
 		return $data;
 	}

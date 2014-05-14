@@ -8,7 +8,7 @@ $col= 1 ;
 	<div class="vmheader"><?php echo $headerText ?></div>
 <?php endif;
 if ($display_style =="div") { ?>
-	<div class="vmmanufacturer<?php echo $params->get('moduleclass_sfx'); ?>">
+	<div class="vmmanufacturer<?php echo $moduleclass_sfx; ?>">
 	<?php foreach ($manufacturers as $manufacturer) {
 		$link = JROUTE::_('index.php?option=com_virtuemart&view=manufacturer&virtuemart_manufacturer_id=' . $manufacturer->virtuemart_manufacturer_id);
 
@@ -42,7 +42,7 @@ if ($display_style =="div") { ?>
 	$last = count($manufacturers)-1;
 ?>
 
-<ul class="vmmanufacturer<?php echo $params->get('moduleclass_sfx'); ?>">
+<ul class="vmmanufacturer<?php echo $moduleclass_sfx; ?>">
 <?php
 foreach ($manufacturers as $manufacturer) {
 	$link = JROUTE::_('index.php?option=com_virtuemart&view=manufacturer&virtuemart_manufacturer_id=' . $manufacturer->virtuemart_manufacturer_id);
@@ -62,7 +62,7 @@ foreach ($manufacturers as $manufacturer) {
 	</li>
 	<?php
 	if ($col == $manufacturers_per_row && $manufacturers_per_row && $last) {
-		echo '</ul><ul class="vmmanufacturer'.$params->get('moduleclass_sfx').'">';
+		echo '</ul><ul class="vmmanufacturer'.$moduleclass_sfx.'">';
 		$col= 1 ;
 	} else {
 		$col++;

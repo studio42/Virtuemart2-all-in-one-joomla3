@@ -1,6 +1,6 @@
 <?php // no direct access
 defined('_JEXEC') or die('Restricted access');
-vmJsApi::jPrice();
+if ($show_addtocart) vmJsApi::jPrice();
 
 ?>
 <div class="vmgroup<?php echo $params->get( 'moduleclass_sfx' ) ?>">

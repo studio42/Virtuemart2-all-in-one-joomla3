@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/module-install.dtd">
 <extension type="module" version="2.5" method="upgrade"> 
     <name>mod_virtuemart_currencies</name>
     <creationDate>July 15 2013</creationDate>
     <author>The VirtueMart Development Team</author>
     <authorUrl>http://www.virtuemart.net</authorUrl>
-    <copyright>${PHING.VM.COPYRIGH}</copyright>
+	<copyright>Copyright (C) 2004-2012 Virtuemart Team. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <version>2.0.22a</version>
     <description>MOD_VIRTUEMART_CURRENCIES_DESC</description>
     <files>
         <filename module="mod_virtuemart_currencies">mod_virtuemart_currencies.php</filename>
         <filename>index.html</filename>
-        <filename>tmpl/default.php</filename>
-        <filename>tmpl/index.html</filename>
+		<folder>tmpl</folder>
+		<folder>language</folder>
     </files>
     <languages folder="language">
 	<language tag="en-GB">en-GB/en-GB.mod_virtuemart_currencies.ini</language>

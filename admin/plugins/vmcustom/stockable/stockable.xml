@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<extension version="2.5" type="plugin" group="vmcustom" >
+<extension version="2.5" type="plugin" group="vmcustom" method="upgrade">
     <name>VMCUSTOM_STOCKABLE</name>
     <creationDate>July 15 2013</creationDate>
     <author>The VirtueMart Development Team</author>
@@ -18,7 +18,7 @@
 	<config>
 	<fields name="params">
 		<fieldset name="options" addfieldpath="/administrator/components/com_virtuemart/models/fields">
-
+			<field type="vmjpluginwarning" name="vmjpluginwarning"/>
         <field type="vmjpluginwarning" />
 		<field type="spacer" default="VMCUSTOM_STOCKABLE_USAGE"   />
         <field name="selectname1" type="text"  size="30"  default="" label="VMCUSTOM_STOCKABLE_SELECTNAME" description="VMCUSTOM_STOCKABLE_SELECTNAME_DESC" />

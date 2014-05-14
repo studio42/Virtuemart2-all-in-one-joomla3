@@ -20,6 +20,11 @@ defined('_JEXEC') or  die( 'Direct Access to '.basename(__FILE__).' is not allow
 * and displays it wherever you want
 *----------------------------------------------------------------------
 */
+// display in product ?
+if (!$product_view = $params->get('product_view', 1)) {
+	$jinput = JFactory::getApplication()->input;
+	if ($jinput->getWord('view') == 'productdetails') return '';
+}
 /* Load  VM fonction */
 require('helper.php');
 if (!class_exists( 'VmConfig' )) require(JPATH_ADMINISTRATOR .'/components/com_virtuemart/helpers/config.php');

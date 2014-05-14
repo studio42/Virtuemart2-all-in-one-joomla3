@@ -68,6 +68,11 @@ class JDocumentRendererDompdf extends DOMPDF
 		// Default settings are a portrait layout with an A4 configuration using millimeters as units
 
 		parent::__construct();
+		$orientation = ($orientation == 'P') ? 'portrait' : 'landscape';
+		$this->set_paper($format, $orientation);
+		$this->set_host(juri::root());
+		$this->set_base_path(JPATH_SITE.'/');
+		$this->_css->set_host(juri::root());
 		//'',$format,0,'',$doc->_margin_left,$doc->_margin_right,$doc->_margin_top,$doc->_margin_bottom,$doc->_margin_header,$doc->_margin_footer,$orientation);
 		// set default header/footer
 		// $app = JFactory::getApplication();
@@ -120,16 +125,17 @@ class JDocumentRendererDompdf extends DOMPDF
 	 */
 	public function render($name = '', $destination = 'I', $content = null)
 	{
-		// var_dump($this->jdoc);jexit();
-		// $app = JFactory::getApplication();
-                // $pdf = $this->engine;
-                // $data = parent::render();
-				$content = $this->fullPaths($content);
-				// html debug output 
-				if (JRequest::getInt('print', null) == 2) return $content;
+		$jinput = JFactory::getApplication()->input;
 
-                //echo $data;exit;
-                $this->load_html($content);
+		// $app = JFactory::getApplication();
+		// $pdf = $this->engine;
+		// $data = parent::render();
+		$content = $this->fullPaths($content);
+		// html debug output 
+		if ($jinput->get('print',0,'INT')  == 2) return $content;
+
+                //
+                $this->load_html($content,'UTF-8');
                 parent::render();
 				// "I" send to browser with save as possibility
 				if ($destination === "I") $this->stream($name) ;
@@ -166,18 +172,62 @@ class JDocumentRendererDompdf extends DOMPDF
 	public function setRTL($isRtl = false) {
 		$this->directionality = $isRtl ? 'rtl' : 'ltr';
 	}
-        /**
-         * parse relative images a hrefs and style sheets to full paths
-         * @param       string  &$data
-         */
- 
+	/**
+	 * parse relative images a hrefs and style sheets to full paths
+	 * add stylesheet if not set
+	 * add missing header,body ... tags, if needed
+	 * @param       string  &$data
+	 */
+
 	private function fullPaths($data)
 	{
-		$header = $footer = '';
-		if (!strpos($data, 'html>')) {
-			$full = juri::root(); 
-			$short = juri::root(true).'/';
+		$header = $footer = $style = '';
+		$full = juri::root(); 
+		$short = juri::root(true).'/';
+
+		$this->add_info('Title',$this->Title);
+		$this->add_info('Creator',$this->Creator);
+		$this->add_info('Author',$this->Author);
+		$this->add_info('Subject',$this->Subject);
+		$this->add_info('Keywords',$this->Keywords);
+		// add css
+		if (empty($this->jdoc->_styleSheets)) {
+		// default styling, if not set
+			if (isset($this->jdoc->header_logo)) {
+				$file = $this->jdoc->header_logo;
+				if (file_exists($file)) {
+					$finfo = finfo_open(FILEINFO_MIME_TYPE); 
+					$mime = finfo_file($finfo, $file);
+					if ($mime ==="image/gif" || $mime ==="image/jpeg") {
+						$this->header_logo = $file ;
+					}
+				} else $this->header_logo = '';
+			}
+			$logo_height = $this->jdoc->params->get('logo_height',48);
+			$style .='
+			 <style>
+				@page { margin: 0px 0px; padding: 0px 0px; }
+				.pdf-header { position: fixed; padding-left:'.$this->jdoc->_margin_left.'mm; padding-right:'.$this->jdoc->_margin_right.'mm; padding-top:'.$this->jdoc->_margin_header.'mm; left: 0px; top: 0px; right: 0px; height: 30px; text-align: right;}
+				.pdf-header h1{margin:0px}
+				.pdf-headerr img{ position: fixed; padding-left:'.$this->jdoc->_margin_left.'mm; padding-right:'.$this->jdoc->_margin_right.'mm; padding-top:'.$this->jdoc->_margin_header.'mm; left: 0px; top: 0px; right: 0px; height: '.$logo_height.'px;}
+				.pdf-footer { position: fixed; padding-left:'.$this->jdoc->_margin_left.'mm; padding-right:'.$this->jdoc->_margin_right.'mm; padding-top:'.$this->jdoc->_margin_footer.'mm;  bottom: -10px; height: 40px; text-align: left;}
+				#pageCounter{  position: fixed; padding-right:25px; bottom: -10px; height: 40px;  text-align: right; }
+				#pageCounter span:after { content: counter(page); }
+			</style>
+			';
 		
+		} else {
+			foreach ($this->jdoc->_styleSheets as $src => $css) {
+				if ($src[1] === "/" ) $src = str_replace($short, $full, $src);
+				$this->_css->load_css_file($src);
+				// $header.'<link rel="stylesheet"  href="'.$src.'" type="'.$css['mime'].'">';
+				
+			}
+		}
+
+		if (!strpos($data, 'html>')) {
+
+		// var_dump($this); jexit();
 			$langTag = JFactory::getLanguage()->getTag();
 			// missing header create it
 			$header = '
@@ -187,6 +237,7 @@ class JDocumentRendererDompdf extends DOMPDF
 				<title>'.$this->Title.'</title>
 				<meta name="title" content="'.$this->Title.'" />
 				<meta name="generator" content="'.$this->Creator.'" />
+				<meta name="author" content="'.$this->Author.'" />
 				<meta name="description" content="'.$this->Subject.'" />
 				<meta name="keywords" content="'.$this->Keywords.'" />';
 			// add scripts
@@ -195,12 +246,7 @@ class JDocumentRendererDompdf extends DOMPDF
 				$header.'<script src="'.$src.'" type="'.$script['mime'].'"></script>';
 				
 			}
-			// add css
-			foreach ($this->jdoc->_styleSheets as $src => $css) {
-				if ($src[1] === "/" ) $src = str_replace($short, $full, $src);
-				
-				$header.'<link rel="stylesheet"  href="'.$src.'" type="'.$css['mime'].'">';
-			}
+
 			$header .= '</head>';
 			$footer = '</html>';
 			if (!strpos($data, 'body>')) {
@@ -208,40 +254,29 @@ class JDocumentRendererDompdf extends DOMPDF
 				$footer = '</body>'.$footer;
 			}
 		}
+
 		// var_dump($this);jexit();
 		if (!empty($this->HTMLHeader)) {
-		//@page { margin: 180px 50px; }
 			$logo_height = $this->jdoc->params->get('logo_height',48);
-			$header .='
-		  <style>
-			@page { margin: 0px 0px; padding: 0px 0px; }
-			#HTMLHeader { position: fixed; padding-left:'.$this->jdoc->_margin_left.'mm; padding-right:'.$this->jdoc->_margin_right.'mm; padding-top:'.$this->jdoc->_margin_header.'mm; left: 0px; top: 0px; right: 0px; height: 30px; text-align: right;}
-			#HTMLHeader h1{margin:0px}
-			#HTMLHeader img{ position: fixed; padding-left:'.$this->jdoc->_margin_left.'mm; padding-right:'.$this->jdoc->_margin_right.'mm; padding-top:'.$this->jdoc->_margin_header.'mm; left: 0px; top: 0px; right: 0px; height: '.$logo_height.'px;}
-		  </style>
-		  ';
-			$header .= '<div id="HTMLHeader">'.$this->HTMLHeader.'</div>' ;
+			if (empty($this->jdoc->_styleSheets)) {
+
+			}
+			$header .= '<div class="pdf-header">'.$this->HTMLHeader.'</div>' ;
 		}
 		// echo($data) ;jexit();
 		if (!empty($this->HTMLfooter)) {
 		//@page { margin: 180px 50px; }
-			$header .= '<div id="HTMLfooter">'.$this->HTMLfooter.'</div>' ;
+			$header .= '<div class="pdf-footer">'.$this->HTMLfooter.'</div>' ;
 		} else {
 			$siteUrl = JURI::getInstance()->toString();
-			$siteUrl = str_replace("format=pdf", "", $siteUrl);
+			$siteUrl = str_replace("&format=pdf", "", $siteUrl);
+			$siteUrl = str_replace("?format=pdf", "", $siteUrl);
 			$app = JFactory::getApplication();
 			$title = $app->getCfg('sitename').' - '.$this->Title;
-			$header .='
-			  <style>
-				#HTMLfooter { position: fixed; padding-left:'.$this->jdoc->_margin_left.'mm; padding-right:'.$this->jdoc->_margin_right.'mm; padding-top:'.$this->jdoc->_margin_footer.'mm;  bottom: -10px; height: 40px; text-align: left;}
-				#pageCounter{  position: fixed; padding-right:25px; bottom: -10px; height: 40px;  text-align: right; }
-				#pageCounter span:after { content: counter(page); }
-			  </style>
-			  ';
-			$header .= '<div id="HTMLfooter"><p class="page"><a href="'.$siteUrl.'">'.$title.'</p></div><div id="pageCounter"><span class="number">Page </span></div>' ;
+			$header .= '<div class="pdf-footer"><div class="page"><a href="'.$siteUrl.'">'.$title.'</div></div><div id="pageCounter"><span class="number">Page </span></div>' ;
 		
 		}
-		$data = $header.$data.$footer;
+		$data = $header.$style.$data.$footer;
 		// make absolute links
 		$full = '"'.juri::root(); 
 		$short = '"'.juri::root(true).'/';

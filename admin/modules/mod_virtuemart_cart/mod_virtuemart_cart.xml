@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<install type="module" version="2.5.0" client="site" method="upgrade">
+<extension type="module" version="2.5.0" method="upgrade">
     <name>VirtueMart Shopping Cart</name>
     <creationDate>March 17 2013</creationDate>
     <author>The VirtueMart Development Team</author>
@@ -17,29 +17,25 @@
     <config>
         <fields name="params">
             <fieldset name="basic">
-				<field
-					name="moduleclass_sfx"
-					type="text"
-					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
-					description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
-                <field name="show_price" type="list" default="1"
-					label="MOD_VIRTUEMART_CART_SHOW_PRICE"
-					description="MOD_VIRTUEMART_CART_SHOW_PRICE_DESC">
+
+			<field name="show_price" type="list" default="1"
+			label="MOD_VIRTUEMART_CART_SHOW_PRICE"
+			description="MOD_VIRTUEMART_CART_SHOW_PRICE_DESC">
                     <option value="0">No</option>
                     <option value="1">Yes</option>
                 </field>
                 <field name="show_product_list" type="list" default="1"
-					label="MOD_VIRTUEMART_CART_SHOW_LIST"
-					description="MOD_VIRTUEMART_CART_SHOW_LIST_DESC">
+			label="MOD_VIRTUEMART_CART_SHOW_LIST"
+			description="MOD_VIRTUEMART_CART_SHOW_LIST_DESC">
                     <option value="0">No</option>
                     <option value="1">Yes</option>
                 </field>
-				<field
-					name="layout"
-					type="modulelayout"
-					label="JFIELD_ALT_LAYOUT_LABEL"
-					description="JFIELD_ALT_MODULE_LAYOUT_DESC" />
+			<field name="moduleclass_sfx" type="text"
+				label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+				description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+			<field name="layout" type="modulelayout"
+				label="JFIELD_ALT_LAYOUT_LABEL" description="JFIELD_ALT_MODULE_LAYOUT_DESC" />
             </fieldset>
         </fields>
     </config>
-</install>
+</extension>

@@ -36,5 +36,6 @@ if ($params->get ('filter_category', 0)) {
 } else {
 	$category_id = 0;
 }
-require(JModuleHelper::getLayoutPath ('mod_virtuemart_search', $params->get('layout', 'default') ) );
+$layout = $params->get('layout','default');
+require(JModuleHelper::getLayoutPath ('mod_virtuemart_search',$layout));
 ?>

@@ -4,9 +4,9 @@
  *
  * Virtuemart Product Search :
  * This file was originally wrote by me, modified by virtuemart team 
- * and updated by studio 42 to be compatible with joomla 3 
+ * and updated by studio 42 to be compatible with joomla 2.5 & 3 
  *
- * @author Kohl Patrick & virtuemart team
+ * @author Patrick Kohl & virtuemart team
  * @package VirtueMart Joomla 3
  * @copyright Copyright (C) 2013 Studio 42 / virtuemart  dev team- All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
@@ -67,7 +67,7 @@ class plgSearchVirtuemart extends JPlugin {
 
 		$limit = $this->params->def ('search_limit', 50);
 		if (!class_exists ('VmConfig')) {
-			require(JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_virtuemart' . DS . 'helpers' . DS . 'config.php');
+			require(JPATH_ADMINISTRATOR '/components/com_virtuemart/helpers/config.php');
 		}
 		VmConfig::loadConfig ();
 		/* TO do it work with date
@@ -85,7 +85,7 @@ class plgSearchVirtuemart extends JPlugin {
 		$wheres = array();
 		switch ($phrase) {
 			case 'exact':
-				$text = $db->Quote ('%' . $db->getEscaped ($text, TRUE) . '%', FALSE);
+				$text = $db->Quote ('%' . $db->escape ($text, TRUE) . '%', FALSE);
 				$wheres2 = array();
 				$wheres2[] = 'p.product_sku LIKE ' . $text;
 				$wheres2[] = 'a.product_name LIKE ' . $text;
@@ -101,7 +101,7 @@ class plgSearchVirtuemart extends JPlugin {
 				$words = explode (' ', $text);
 				$wheres = array();
 				foreach ($words as $word) {
-					$word = $db->Quote ('%' . $db->getEscaped ($word, TRUE) . '%', FALSE);
+					$word = $db->Quote ('%' . $db->escape ($word, TRUE) . '%', FALSE);
 					$wheres2 = array();
 					$wheres2[] = 'p.product_sku LIKE ' . $word;
 					$wheres2[] = 'a.product_name LIKE ' . $word;
@@ -150,7 +150,7 @@ class plgSearchVirtuemart extends JPlugin {
 		}
 
 		// search product //TODO  b.virtuemart_category_id>0 should be configurable
-		$text = $db->Quote ('%' . $db->getEscaped ($text, TRUE) . '%', FALSE);
+		$text = $db->Quote ('%' . $db->escape ($text, TRUE) . '%', FALSE);
 		$query = "SELECT DISTINCT CONCAT( a.product_name,' (',p.product_sku,')' ) AS title, a.virtuemart_product_id , b.virtuemart_category_id ,   a.product_s_desc   AS text, b.category_name as section,
 				 p.created_on as created, '2' AS browsernav
 				FROM `#__virtuemart_products_" . VMLANG . "` AS a

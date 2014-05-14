@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE install SYSTEM "http://www.joomla.org/xml/dtd/1.5/module-install.dtd">
-<extension type="module" version="2.5" method="upgrade"> 
+<extension
+	type="module"
+	version="2.5"
+	client="site"
+	method="upgrade">
     <name>mod_virtuemart_product</name>
-    <creationDate>July 15 2013</creationDate>
-    <author>The VirtueMart Development Team</author>
-    <authorUrl>http://www.virtuemart.net</authorUrl>
-    <copyright>${PHING.VM.COPYRIGH}</copyright>
+    <creationDate>Sep 24 2013</creationDate>
+    <author>Studio 42</author>
+    <authorUrl>http://www.st42.fr</authorUrl>
+    <copyright>Copyright (C) 2012-2013 Studio 42. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-    <version>2.0.22a</version>
+    <version>2.0.20b-st42</version>
     <description>MOD_VIRTUEMART_PRODUCT_DESC</description>
     <files>
 	<filename module="mod_virtuemart_product">mod_virtuemart_product.php</filename>
 	<filename>index.html</filename>
 	<filename>helper.php</filename>
-	<filename>tmpl/default.php</filename>
-	<filename>tmpl/single.php</filename>
-	<filename>tmpl/index.html</filename>
+		<folder>tmpl</folder>
     </files>
 	<languages>
 		<language tag="en-GB">en-GB.mod_virtuemart_product.ini</language>

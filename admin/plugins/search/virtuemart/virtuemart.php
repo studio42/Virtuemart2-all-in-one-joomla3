@@ -67,7 +67,7 @@ class plgSearchVirtuemart extends JPlugin {
 
 		$limit = $this->params->def ('search_limit', 50);
 		if (!class_exists ('VmConfig')) {
-			require(JPATH_ADMINISTRATOR '/components/com_virtuemart/helpers/config.php');
+			require(JPATH_ADMINISTRATOR .'/components/com_virtuemart/helpers/config.php');
 		}
 		VmConfig::loadConfig ();
 		/* TO do it work with date

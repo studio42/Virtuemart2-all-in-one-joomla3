@@ -50,10 +50,10 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 			jimport ('joomla.filesystem.file');
 			jimport ('joomla.installer.installer');
 
-			$this->createIndexFolder (JPATH_ROOT . DS . 'plugins' . DS . 'vmcalculation');
-			$this->createIndexFolder (JPATH_ROOT . DS . 'plugins' . DS . 'vmcustom');
-			$this->createIndexFolder (JPATH_ROOT . DS . 'plugins' . DS . 'vmpayment');
-			$this->createIndexFolder (JPATH_ROOT . DS . 'plugins' . DS . 'vmshipment');
+			$this->createIndexFolder (JPATH_ROOT .'/plugins/vmcalculation');
+			$this->createIndexFolder (JPATH_ROOT .'/plugins/vmcustom');
+			$this->createIndexFolder (JPATH_ROOT .'/plugins/vmpayment');
+			$this->createIndexFolder (JPATH_ROOT .'/plugins/vmshipment');
 
 			$this->path = JInstaller::getInstance ()->getPath ('extension_administrator');
 
@@ -97,81 +97,51 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 			if ($task != 'updateDatabase') {
 
 				// modules auto move
-				$src = $this->path . DS . "modules";
-				$dst = JPATH_ROOT . DS . "modules";
+				$src = $this->path .'/modules';
+				$dst = JPATH_ROOT . '/modules';
 				$this->recurse_copy ($src, $dst);
 
 				echo "Checking VirtueMart2 modules...";
 				if (!$this->VmModulesAlreadyInstalled ()) {
 					echo "Installing VirtueMart2 modules<br/ >";
-					if (version_compare (JVERSION, '1.6.0', 'ge')) {
-						$defaultParams = '{"text_before":"","product_currency":"","cache":"1","moduleclass_sfx":"","class_sfx":""}';
-					} else {
-						$defaultParams = "text_before=\nproduct_currency=\ncache=1\nmoduleclass_sfx=\nclass_sfx=\n";
-					}
+					$defaultParams = '{"text_before":"","product_currency":"","cache":"1","moduleclass_sfx":"","class_sfx":""}';
 					$this->installModule ('VM - Currencies Selector', 'mod_virtuemart_currencies', 4, $defaultParams);
 
-					if (version_compare (JVERSION, '1.6.0', 'ge')) {
-						$defaultParams = '{"product_group":"featured","max_items":"1","products_per_row":"1","display_style":"list","show_price":"1","show_addtocart":"1","headerText":"Best products","footerText":"","filter_category":"0","virtuemart_category_id":"0","cache":"0","moduleclass_sfx":"","class_sfx":""}';
-
-					} else {
-						$defaultParams = "product_group=featured\nmax_items=1\nproducts_per_row=1\ndisplay_style=list\nshow_price=1\nshow_addtocart=1\nheaderText=Best products\nfooterText=\nfilter_category=0\ncategory_id=1\ncache=0\nmoduleclass_sfx=\nclass_sfx=\n";
-					}
+					$defaultParams = '{"product_group":"featured","max_items":"1","products_per_row":"1","display_style":"list","show_price":"1","show_addtocart":"1","headerText":"Best products","footerText":"","filter_category":"0","virtuemart_category_id":"0","cache":"0","moduleclass_sfx":"","class_sfx":""}';
 					$this->installModule ('VM - Featured products', 'mod_virtuemart_product', 3, $defaultParams);
 
-					if (version_compare (JVERSION, '1.6.0', 'ge')) {
-						$defaultParams = '{"product_group":"topten","max_items":"1","products_per_row":"1","display_style":"list","show_price":"1","show_addtocart":"1","headerText":"","footerText":"","filter_category":"0","virtuemart_category_id":"0","cache":"0","moduleclass_sfx":"","class_sfx":""}';
-					} else {
-						$defaultParams = "product_group=topten\nmax_items=1\nproducts_per_row=1\ndisplay_style=list\nshow_price=1\nshow_addtocart=1\nheaderText=\nfooterText=\nfilter_category=0\ncategory_id=1\ncache=0\nmoduleclass_sfx=\nclass_sfx=\n";
-					}
+					$defaultParams = '{"product_group":"topten","max_items":"1","products_per_row":"1","display_style":"list","show_price":"1","show_addtocart":"1","headerText":"","footerText":"","filter_category":"0","virtuemart_category_id":"0","cache":"0","moduleclass_sfx":"","class_sfx":""}';
 					$this->installModule ('VM - Best Sales', 'mod_virtuemart_product', 1, $defaultParams);
 
-					if (version_compare (JVERSION, '1.6.0', 'ge')) {
-
-						$defaultParams = '{"width":"20","text":"","button":"","button_pos":"right","imagebutton":"","button_text":""}';
-					} else {
-						$defaultParams = "width=20\ntext=\nbutton=\nbutton_pos=right\nimagebutton=\nbutton_text=\nmoduleclass_sfx=\ncache=1\ncache_time=900\n";
-					}
+					$defaultParams = '{"width":"20","text":"","button":"","button_pos":"right","imagebutton":"","button_text":""}';
 					$this->installModule ('VM - Search in Shop', 'mod_virtuemart_search', 2, $defaultParams);
 
-					if (version_compare (JVERSION, '1.6.0', 'ge')) {
-						$defaultParams = '{"show":"all","display_style":"list","manufacturers_per_row":"1","headerText":"","footerText":""}';
-					} else {
-						$defaultParams = "show=all\ndisplay_style=div\nmanufacturers_per_row=1\nheaderText=\nfooterText=\ncache=0\nmoduleclass_sfx=\nclass_sfx=";
-					}
+					$defaultParams = '{"show":"all","display_style":"list","manufacturers_per_row":"1","headerText":"","footerText":""}';
 					$this->installModule ('VM - Manufacturer', 'mod_virtuemart_manufacturer', 5, $defaultParams);
 
-					if (version_compare (JVERSION, '1.6.0', 'ge')) {
-						$defaultParams = '{"moduleclass_sfx":"","show_price":"1","show_product_list":"1"}';
-					} else {
-						$defaultParams = "moduleclass_sfx=\nshow_price=1\nshow_product_list=1\n";
-					}
+					$defaultParams = '{"moduleclass_sfx":"","show_price":"1","show_product_list":"1"}';
 					$this->installModule ('VM - Shopping cart', 'mod_virtuemart_cart', 0, $defaultParams);
 
-					if (version_compare (JVERSION, '1.6.0', 'ge')) {
-						$defaultParams = '{"Parent_Category_id":"0","layout":"default","cache":"0","moduleclass_sfx":"","class_sfx":""}';
-					} else {
-						$defaultParams = "moduleclass_sfx=\nclass_sfx=\ncategory_name=default\ncache=no\n";
-					}
+					$defaultParams = '{"Parent_Category_id":"0","layout":"default","cache":"0","moduleclass_sfx":"","class_sfx":""}';
 					$this->installModule ('VM - Category', 'mod_virtuemart_category', 6, $defaultParams);
 				} else {
 					echo "VirtueMart2 modules already installed<br/ >";
 				}
 				// language auto move
-				$src = $this->path . DS . "languageFE";
-				$dst = JPATH_ROOT . DS . "language";
+				$src = $this->path . "/languageFE";
+				$dst = JPATH_ROOT . "/language";
 				$this->recurse_copy ($src, $dst);
 				echo " VirtueMart2 language moved to the joomla language FE folder<br/ >";
 
 				// language auto move
-				$src = $this->path . DS . "languageBE";
-				$dst = JPATH_ADMINISTRATOR . DS . "language";
+				$src = $this->path . "/languageBE";
+				$dst = JPATH_ADMINISTRATOR . "/language";
 				$this->recurse_copy ($src, $dst);
 				echo " VirtueMart2 language moved to the joomla language BE folder<br/ >";
 
 				// libraries auto move
-				$src = $this->path . DS . "libraries";
-				$dst = JPATH_ROOT . DS . "libraries";
+				$src = $this->path . "/libraries";
+				$dst = JPATH_ROOT . "/libraries";
 				$this->recurse_copy ($src, $dst);
 				echo " VirtueMart2 pdf moved to the joomla libraries folder<br/ >";
 
@@ -230,34 +200,16 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 
 			if ($task != 'updateDatabase') {
 				$data = array();
-				$src = $this->path . DS . 'plugins' . DS . $group . DS . $element;
+				$src = $this->path. '/plugins/'. $group. '/'. $element;
 
 				if ($createJPluginTable) {
-					if (version_compare (JVERSION, '1.7.0', 'ge')) {
 
-						// Joomla! 1.7 code here
-						$table = JTable::getInstance ('extension');
-						$data['enabled'] = $published;
-						$data['access'] = 1;
-						$tableName = '#__extensions';
-						$idfield = 'extension_id';
-					} elseif (version_compare (JVERSION, '1.6.0', 'ge')) {
-
-						// Joomla! 1.6 code here
-						$table = JTable::getInstance ('extension');
-						$data['enabled'] = $published;
-						$data['access'] = 1;
-						$tableName = '#__extensions';
-						$idfield = 'extension_id';
-					} else {
-
-						// Joomla! 1.5 code here
-						$table = JTable::getInstance ('plugin');
-						$data['published'] = $published;
-						$data['access'] = 0;
-						$tableName = '#__plugins';
-						$idfield = 'id';
-					}
+					// Joomla! 1.7 code here
+					$table = JTable::getInstance ('extension');
+					$data['enabled'] = $published;
+					$data['access'] = 1;
+					$tableName = '#__extensions';
+					$idfield = 'extension_id';
 
 					$data['name'] = $name;
 					$data['type'] = $type;
@@ -274,9 +226,7 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 					//We write only in the table, when it is not installed already
 					if ($count == 0) {
 						// 				$table->load($count);
-						if (version_compare (JVERSION, '1.6.0', 'ge')) {
-							$data['manifest_cache'] = json_encode (JApplicationHelper::parseXMLInstallFile ($src . DS . $element . '.xml'));
-						}
+						$data['manifest_cache'] = json_encode (JApplicationHelper::parseXMLInstallFile ($src . '/' . $element . '.xml'));
 
 						if (!$table->bind ($data)) {
 							$app = JFactory::getApplication ();
@@ -311,11 +261,8 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 				}
 
 			}
-			if (version_compare (JVERSION, '1.7.0', 'ge')) {
-				// Joomla! 1.7 code here
-				$dst = JPATH_ROOT . DS . 'plugins' . DS . $group . DS . $element;
-
-			}
+			// Joomla! 1.7 code here
+			$dst = JPATH_ROOT . '/plugins/'  . $group . '/'. $element;
 
 			if ($task != 'updateDatabase') {
 				$this->recurse_copy ($src, $dst);
@@ -332,11 +279,11 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 
 			//Update Tables
 			if (!class_exists ('VmConfig')) {
-				require(JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_virtuemart' . DS . 'helpers' . DS . 'config.php');
+				require(JPATH_ADMINISTRATOR .'/components/com_virtuemart/helpers/config.php');
 			}
 
 			if (class_exists ('VmConfig')) {
-				$pluginfilename = $dst . DS . $element . '.php';
+				$pluginfilename = $dst .'/'. $element . '.php';
 				require ($pluginfilename);
 
 				//plgVmpaymentPaypal
@@ -367,7 +314,7 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 					$app->enqueueMessage (get_class ($this) . ':: VirtueMart2 update ' . $tablename);
 
 					if (!class_exists ('GenericTableUpdater')) {
-						require(JPATH_VM_ADMINISTRATOR . DS . 'helpers' . DS . 'tableupdater.php');
+						require(JPATH_VM_ADMINISTRATOR .'/helpers/tableupdater.php');
 					}
 					$updater = new GenericTableUpdater();
 
@@ -399,7 +346,7 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 			$q = 'SELECT id FROM `#__modules` WHERE `module` = "' . $module . '" ';
 			$db->setQuery ($q);
 			$id = $db->loadResult ();
-			$src = JPATH_ROOT . DS . 'modules' . DS . $module;
+			$src = JPATH_ROOT .'/modules/' . $module;
 
 			if (!empty($id)) {
 				return;
@@ -491,7 +438,7 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 			$action = '';
 			if (empty($ext_id)) {
 				if (version_compare (JVERSION, '1.6.0', 'ge')) {
-					$manifest_cache = json_encode (JApplicationHelper::parseXMLInstallFile ($src . DS . $module . '.xml'));
+					$manifest_cache = json_encode (JApplicationHelper::parseXMLInstallFile ($src . '/' . $module . '.xml'));
 				}
 				$q = 'INSERT INTO `#__extensions` 	(`name`, `type`, `element`, `folder`, `client_id`, `enabled`, `access`, `protected`, `manifest_cache`, `params`, `ordering`) VALUES
 																( "' . $module . '" , "module", "' . $module . '", "", "0", "1","' . $access . '", "0", "' . $db->escape ($manifest_cache) . '", "' . $params . '","' . $ordering . '");';
@@ -621,18 +568,18 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 			if (is_resource ($dir)) {
 				while (FALSE !== ($file = readdir ($dir))) {
 					if (($file != '.') && ($file != '..')) {
-						if (is_dir ($src . DS . $file)) {
-							$this->recurse_copy ($src . DS . $file, $dst . DS . $file);
+						if (is_dir ($src . '/'. $file)) {
+							$this->recurse_copy ($src . '/'. $file, $dst . '/'. $file);
 						} else {
-							if (JFile::exists ($dst . DS . $file)) {
-								if (!JFile::delete ($dst . DS . $file)) {
+							if (JFile::exists ($dst . '/'. $file)) {
+								if (!JFile::delete ($dst . '/'. $file)) {
 									$app = JFactory::getApplication ();
-									$app->enqueueMessage ('Couldnt delete ' . $dst . DS . $file);
+									$app->enqueueMessage ('Couldnt delete ' . $dst . '/'. $file);
 								}
 							}
-							if (!JFile::move ($src . DS . $file, $dst . DS . $file)) {
+							if (!JFile::move ($src . '/'. $file, $dst . '/'. $file)) {
 								$app = JFactory::getApplication ();
-								$app->enqueueMessage ('Couldnt move ' . $src . DS . $file . ' to ' . $dst . DS . $file);
+								$app->enqueueMessage ('Couldnt move ' . $src . '/'. $file . ' to ' . $dst . '/'. $file);
 							}
 						}
 					}
@@ -663,8 +610,8 @@ if (!defined ('_VM_SCRIPT_INCLUDED')) {
 		public function createIndexFolder ($path) {
 
 			if (JFolder::create ($path)) {
-				if (!JFile::exists ($path . DS . 'index.html')) {
-					JFile::copy (JPATH_ROOT . DS . 'components' . DS . 'index.html', $path . DS . 'index.html');
+				if (!JFile::exists ($path .'/index.html')) {
+					JFile::copy (JPATH_ROOT .'/components/index.html', $path .'/index.html');
 				}
 				return TRUE;
 			}
